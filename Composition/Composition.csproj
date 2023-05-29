@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>ContainerFeatureSampleComparison.Composition</RootNamespace>
+        <AssemblyName>ContainerFeatureSampleComparison.Composition</AssemblyName>
+        <Product>$(AssemblyName)</Product>
+        
+        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+        <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)\GeneratedFiles</CompilerGeneratedFilesOutputPath>
+        <RestoreAdditionalProjectSources>..\_LocalPackages</RestoreAdditionalProjectSources>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\FeatureDefinitions\FeatureDefinitions.csproj" />
+        <ProjectReference Include="..\FeatureSamples.MrMeeseeks.DIE\FeatureSamples.MrMeeseeks.DIE.csproj" />
+        <PackageReference Include="ContainerFeatureSampleComparison.SampleAggregationGenerator" Version="1.0.0" />
+    </ItemGroup>
+
+</Project>

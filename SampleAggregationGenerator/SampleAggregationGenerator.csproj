@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Library</OutputType>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <LangVersion>11.0</LangVersion>
+        <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+        <RootNamespace>ContainerFeatureSampleComparison.SampleAggregationGenerator</RootNamespace>
+        <AssemblyName>ContainerFeatureSampleComparison.SampleAggregationGenerator</AssemblyName>
+        <RestoreAdditionalProjectSources>..\_LocalPackages</RestoreAdditionalProjectSources>
+        
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <IsRoslynComponent>true</IsRoslynComponent>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+        <AnalysisLevel>preview</AnalysisLevel>
+        <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Remove="Generator\**" />
+        <EmbeddedResource Remove="Generator\**" />
+        <None Remove="Generator\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="IsExternalInit" Version="1.0.3">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.6.0" />
+        <PackageReference Include="Microsoft.CodeAnalysis.Compilers" Version="4.6.0" PrivateAssets="all" />
+
+        <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="ContainerFeatureSampleComparison.FeatureDefinitions" Version="1.0.0" PrivateAssets="all" GeneratePathProperty="true" />
+        <None Include="$(PkgContainerFeatureSampleComparison_FeatureDefinitions)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    </ItemGroup>
+</Project>
