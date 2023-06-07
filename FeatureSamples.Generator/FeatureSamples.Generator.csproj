@@ -1,16 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
         <OutputType>Library</OutputType>
         <TargetFramework>netstandard2.0</TargetFramework>
         <Nullable>enable</Nullable>
         <LangVersion>11.0</LangVersion>
         <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
-        <RootNamespace>ContainerFeatureSampleComparison.SampleAggregationGenerator</RootNamespace>
-        <AssemblyName>ContainerFeatureSampleComparison.SampleAggregationGenerator</AssemblyName>
-        <RestoreAdditionalProjectSources>..\_LocalPackages</RestoreAdditionalProjectSources>
-        
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <RootNamespace>ContainerFeatureSampleComparison.FeatureSamples.Generator</RootNamespace>
+        <AssemblyName>ContainerFeatureSampleComparison.FeatureSamples.Generator</AssemblyName>
+
         <IsRoslynComponent>true</IsRoslynComponent>
     </PropertyGroup>
 
@@ -31,14 +28,12 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.6.0" />
-        <PackageReference Include="Microsoft.CodeAnalysis.Compilers" Version="4.6.0" PrivateAssets="all" />
-
-        <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+        <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.3.1" />
+        <PackageReference Include="Microsoft.CodeAnalysis.Compilers" Version="4.3.1" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.3.1" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="ContainerFeatureSampleComparison.FeatureDefinitions" Version="1.0.0" PrivateAssets="all" GeneratePathProperty="true" />
-        <None Include="$(PkgContainerFeatureSampleComparison_FeatureDefinitions)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+      <ProjectReference Include="..\FeatureDefinitions\FeatureDefinitions.csproj" />
     </ItemGroup>
 </Project>

@@ -6,6 +6,9 @@
         <Nullable>enable</Nullable>
         <RootNamespace>ContainerFeatureSampleComparison.FeatureSamples.MrMeeseeks.DIE</RootNamespace>
         <AssemblyName>ContainerFeatureSampleComparison.FeatureSamples.MrMeeseeks.DIE</AssemblyName>
+        
+        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+        <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)\GeneratedFiles</CompilerGeneratedFilesOutputPath>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,7 +16,15 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\FeatureDefinitions\FeatureDefinitions.csproj" />
+        <ProjectReference Include="..\FeatureDefinitions\FeatureDefinitions.csproj" />
+        <ProjectReference Include="..\FeatureDefinitions\FeatureDefinitions.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </ProjectReference>
+        <ProjectReference Include="..\FeatureSamples.Generator\FeatureSamples.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </ProjectReference>
     </ItemGroup>
 
 </Project>
