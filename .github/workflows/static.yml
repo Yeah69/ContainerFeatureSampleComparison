@@ -37,9 +37,9 @@ jobs:
           dotnet-version: 6.0.408
       - run: set DOTNET_CLI_TELEMETRY_OPTOUT=1
       - name: Install dependencies
-        run: dotnet restore .\ContainerFeatureSampleComparison.sln
+        run: dotnet restore .\Composition\Composition.csproj
       - name: Build
-        run: dotnet run .Composition\Composition.csproj --configuration Release --no-restore
+        run: dotnet run .\Composition\Composition.csproj --configuration Release --no-restore
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
