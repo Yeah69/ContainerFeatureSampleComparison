@@ -9,7 +9,6 @@
         <RootNamespace>ContainerFeatureSampleComparison.SampleAggregationGenerator</RootNamespace>
         <AssemblyName>ContainerFeatureSampleComparison.SampleAggregationGenerator</AssemblyName>
         
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <IsRoslynComponent>true</IsRoslynComponent>
     </PropertyGroup>
 
@@ -33,13 +32,10 @@
         <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.3.1" />
         <PackageReference Include="Microsoft.CodeAnalysis.Compilers" Version="4.3.1" PrivateAssets="all" />
 
-        <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.3.1" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="ContainerFeatureSampleComparison.FeatureDefinitions" Version="1.0.0" PrivateAssets="all" GeneratePathProperty="true" />
-        <None Include="$(PkgContainerFeatureSampleComparison_FeatureDefinitions)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+        <ProjectReference Include="..\FeatureDefinitions\FeatureDefinitions.csproj" />
     </ItemGroup>
 </Project>
