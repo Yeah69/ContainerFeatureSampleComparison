@@ -212,6 +212,6 @@ function openDescriptionBox(id) {
 </html>
 """);
 
-File.WriteAllText("./index.html", html.ToString());
+File.WriteAllText("./wwwroot/index.html", html.ToString());
 
 Console.WriteLine("Hello, World!");
