@@ -18,6 +18,11 @@ var allAvailableFeatureDescriptions = diContainerComparison
             FeatureDescription: kvpSamples.Value)))
     .ToImmutableDictionary(t => (t.DiContainerName, t.Feature), t => t.FeatureDescription);
 
+var featureDescriptionToId = allAvailableFeatureDescriptions
+    .Values
+    .Select((fd, i) => (fd, $"id{i}"))
+    .ToImmutableDictionary(t => t.fd, t => t.Item2);
+
 var html = new StringBuilder();
 html.AppendLine($$"""
 <!DOCTYPE html>
@@ -134,7 +139,7 @@ foreach (var featureGroupDescription in featureGroupDescriptions)
             {
                 var text = specificFeatureDescription switch
                 {
-                    FeatureSampleDescription featureSampleDescription => "Sample", // TODO: Add sample code
+                    FeatureSampleDescription featureSampleDescription => $"<button onclick=\"openDescriptionBox('{featureDescriptionToId[featureSampleDescription]}')\">Sample</button>",
                     MissingFeatureDescription missingFeatureDescription => missingFeatureDescription.Reason switch
                     {
                         MissingFeatureReason.Unimplemented => "Unimplemented",
@@ -167,7 +172,7 @@ foreach (var featureGroupDescription in featureGroupDescriptions)
                 && specificFeatureDescription is FeatureSampleDescription featureSampleDescription)
             {
                 html.AppendLine($$"""
-<tr style="display: none;">
+<tr id="{{featureDescriptionToId[featureSampleDescription]}}" class="description_box">
     <td colspan="{{diContainerNames.Count + 1}}">
         <pre><code>{{featureSampleDescription.SampleCode}}</code></pre>
     </td>
@@ -187,6 +192,22 @@ foreach (var featureGroupDescription in featureGroupDescriptions)
 html.AppendLine($$"""
             </div>
         </main>
+
+        <script>
+const description_boxes = document.querySelectorAll('.description_box');
+closeAllDescriptionBoxes();
+function closeAllDescriptionBoxes() {
+    for (const description_box of description_boxes) {
+        description_box.style.display = 'none';
+    }
+}
+function openDescriptionBox(id) {
+    closeAllDescriptionBoxes();
+    const description_box = document.getElementById(id);
+    description_box.style.display = 'table-row';
+}
+        </script>
+
     </body>
 </html>
 """);

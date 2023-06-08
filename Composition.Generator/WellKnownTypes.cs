@@ -21,6 +21,7 @@ internal record WellKnownTypes(
 
     // Other
     INamedTypeSymbol DictionaryOfStringAndDiContainerDescriptionType,
+    // ReSharper disable once InconsistentNaming
     INamedTypeSymbol IReadOnlyListOfFeatureGroupDescriptionType,
     INamedTypeSymbol ListOfFeatureGroupDescriptionType,
     INamedTypeSymbol ListOfFeatureDescriptionType,
