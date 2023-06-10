@@ -26,6 +26,21 @@ public enum Feature
     [FeatureGroupAssignment(FeatureGroup.Constructor)]
     [EnumMember(Value = "If a instantiated type has multiple constructors, the container chooses the constructor with the most resolvable parameters.")]
     ConstructorMultipleThenMostParameters,
+    
+    [EnumMember(Value = "This feature is not supported, because of technical reasons.")]
+    NotSupported,
+    [EnumMember(Value = "This feature is not implemented yet. But it is planned to be implemented in the future.")]
+    Unimplemented,
+    [EnumMember(Value = "This feature is not implemented because of a design decision in favor of ….")]
+    DesignDecision,
+    [EnumMember(Value = "This feature is not supported, because of technical reasons.")]
+    NotSupportedNoHint,
+    [EnumMember(Value = "This feature is not implemented yet. But it is planned to be implemented in the future.")]
+    UnimplementedNoHint,
+    [EnumMember(Value = "This feature is not implemented because of a design decision in favor of ….")]
+    DesignDecisionNoHint,
+    [EnumMember(Value = "The state of this feature is unknown.")]
+    Unknown,
 }
 
 public enum MissingFeatureReason

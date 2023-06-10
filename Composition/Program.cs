@@ -3,6 +3,7 @@
 using System.Collections.Immutable;
 using System.Text;
 using ContainerFeatureSampleComparison.FeatureDefinitions;
+using Humanizer;
 
 var diContainerComparison = ContainerFeatureSampleComparison.Generated.Descriptions.CreateDiContainerComparison();
 var featureGroupDescriptions = ContainerFeatureSampleComparison.Generated.Descriptions.CreateFeatureGroupDescriptions();
@@ -90,6 +91,40 @@ html.AppendLine($$"""
               background-color: #f9f9f9;
               color: #666;
             }
+            
+            button {
+              padding: 8px;
+              height: 100%;
+              width: 100%;
+              color: #fff;
+              text-align: left;
+              border: 0;
+              cursor: default;
+            }
+            
+            button.zoom {
+              cursor: zoom-in;
+            }
+            
+            /* Background colors picked from Okabe-Ito (should be color-blind-friendly; https://jfly.uni-koeln.de/color/). Hex values from https://mikemol.github.io/technique/colorblind/2018/02/11/color-safe-palette.html. */
+
+            .status_check {
+              color: white;
+              background-color: #009E73;
+              border: 3px solid black;
+            }
+
+            .status_warn {
+              color: white;
+              background-color: #0072B2;
+              border: 3px dashed black;
+            }
+
+            .status_cross {
+              color: white;
+              background-color: #CC79A7;
+              border: 3px dotted black;
+            }
     </style>
     </head>
     <body>
@@ -102,7 +137,7 @@ foreach (var featureGroupDescription in featureGroupDescriptions)
 {
     html.AppendLine($$"""
 <section>
-    <h2>{{featureGroupDescription.Title}}</h2>
+    <h2>{{featureGroupDescription.Title.Humanize(LetterCasing.Title)}}</h2>
     <div>{{(!string.IsNullOrEmpty(featureGroupDescription.Description) ? $"<p>{featureGroupDescription.Description}</p>" : string.Empty)}}</div>
     <table>
         <tbody>
@@ -128,7 +163,7 @@ foreach (var featureGroupDescription in featureGroupDescriptions)
     {
         html.AppendLine($$"""
 <tr>
-    <td>{{featureDescription.Title}}</td>
+    <td>{{featureDescription.Title.Humanize(LetterCasing.Title)}}</td>
 """); // TODO: Add description
 
         foreach (var diContainerName in diContainerNames)
@@ -139,14 +174,21 @@ foreach (var featureGroupDescription in featureGroupDescriptions)
             {
                 var text = specificFeatureDescription switch
                 {
-                    FeatureSampleDescription featureSampleDescription => $"<button onclick=\"openDescriptionBox('{featureDescriptionToId[featureSampleDescription]}')\">Sample</button>",
-                    MissingFeatureDescription missingFeatureDescription => missingFeatureDescription.Reason switch
+                    FeatureSampleDescription featureSampleDescription => GenerateFeatureStateCell("✓ Sample", "status_check",featureSampleDescription),
+                    MissingFeatureDescription { Hint: null } missingFeatureDescription => missingFeatureDescription.Reason switch
                     {
-                        MissingFeatureReason.Unimplemented => "Unimplemented",
-                        MissingFeatureReason.NotSupported => "Not supported",
-                        MissingFeatureReason.DesignDecision => "Design decision",
+                        MissingFeatureReason.Unimplemented => GenerateFeatureStateCell("⚠ Unimplemented", "status_warn"),
+                        MissingFeatureReason.NotSupported => GenerateFeatureStateCell("⚠ Not supported", "status_warn"),
+                        MissingFeatureReason.DesignDecision => GenerateFeatureStateCell("⚠ Design decision", "status_warn"),
                         _ => throw new ArgumentOutOfRangeException(nameof(missingFeatureDescription.Reason))
-                    }, // TODO: Add hint
+                    },
+                    MissingFeatureDescription { Hint: not null } missingFeatureDescription => missingFeatureDescription.Reason switch
+                    {
+                        MissingFeatureReason.Unimplemented => GenerateFeatureStateCell("⚠ Unimplemented", "status_warn", missingFeatureDescription),
+                        MissingFeatureReason.NotSupported => GenerateFeatureStateCell("⚠ Not supported", "status_warn", missingFeatureDescription),
+                        MissingFeatureReason.DesignDecision => GenerateFeatureStateCell("⚠ Design decision", "status_warn", missingFeatureDescription),
+                        _ => throw new ArgumentOutOfRangeException(nameof(missingFeatureDescription.Reason))
+                    },
                     _ => throw new ArgumentOutOfRangeException(nameof(specificFeatureDescription))
                 };
                 html.AppendLine($$"""
@@ -155,7 +197,21 @@ foreach (var featureGroupDescription in featureGroupDescriptions)
             }
             else
             {
-                html.AppendLine("<td>Unknown</td>");
+                html.AppendLine($"<td>{GenerateFeatureStateCell("✗ Unknown", "status_cross")}</td>");
+            }
+
+            string GenerateFeatureStateCell(string label, string styleClass, IFeatureDescription? associatedFeatureDescription = null)
+            {
+                var onclick = associatedFeatureDescription is not null
+                    ? $" onclick=\"openDescriptionBox('{featureDescriptionToId[associatedFeatureDescription]}')\""
+                    : "";
+                var labelSuffix = associatedFeatureDescription is not null
+                    ? " 🔍"
+                    : "";
+                var cursorClass = associatedFeatureDescription is not null
+                    ? " zoom"
+                    : "";
+                return $"<button class=\"{styleClass}{cursorClass}\"{onclick}>{label}{labelSuffix}</button>";
             }
         }
 
@@ -168,16 +224,28 @@ foreach (var featureGroupDescription in featureGroupDescriptions)
         {
             if (allAvailableFeatureDescriptions.TryGetValue(
                     (diContainerName, featureDescription.Feature), 
-                    out var specificFeatureDescription)
-                && specificFeatureDescription is FeatureSampleDescription featureSampleDescription)
+                    out var specificFeatureDescription))
             {
-                html.AppendLine($$"""
+                if (specificFeatureDescription is FeatureSampleDescription featureSampleDescription)
+                {
+                    html.AppendLine($$"""
 <tr id="{{featureDescriptionToId[featureSampleDescription]}}" class="description_box">
     <td colspan="{{diContainerNames.Count + 1}}">
         <pre><code>{{featureSampleDescription.SampleCode}}</code></pre>
     </td>
 </tr>
 """);
+                }
+                if (specificFeatureDescription is MissingFeatureDescription { Hint: {} hint } missingFeatureDescription)
+                {
+                    html.AppendLine($$"""
+<tr id="{{featureDescriptionToId[missingFeatureDescription]}}" class="description_box">
+    <td colspan="{{diContainerNames.Count + 1}}">
+        <pre><code>{{hint}}</code></pre>
+    </td>
+</tr>
+""");
+                }
             }
         }
     }
