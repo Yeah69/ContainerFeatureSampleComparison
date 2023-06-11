@@ -53,9 +53,11 @@ public enum MissingFeatureReason
 public enum MiscellaneousInformation
 {
     RepositoryUrl,
-    DocumentationUrl,
-    NuGetPackageUrl,
     LicenseUrl,
+    NugetPackageUrl,
+    DocumentationUrl,
+    NonUrlInformation,
+    Unknown,
 }
 
 public enum ResolutionStage

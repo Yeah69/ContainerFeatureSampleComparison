@@ -3,9 +3,10 @@
 [assembly:DiContainer("MrMeeseeks.DIE")]
 
 [assembly:MiscellaneousInformation(MiscellaneousInformation.RepositoryUrl, "https://github.com/Yeah69/MrMeeseeks.DIE")]
-[assembly:MiscellaneousInformation(MiscellaneousInformation.DocumentationUrl, "https://die.mrmeeseeks69.dev")]
+[assembly:MiscellaneousInformation(MiscellaneousInformation.DocumentationUrl, "https://die.mrmeeseeks.dev")]
 [assembly:MiscellaneousInformation(MiscellaneousInformation.LicenseUrl, "https://github.com/Yeah69/MrMeeseeks.DIE/blob/main/LICENSE")]
-[assembly:MiscellaneousInformation(MiscellaneousInformation.NuGetPackageUrl, "https://www.nuget.org/packages/MrMeeseeks.DIE/")]
+[assembly:MiscellaneousInformation(MiscellaneousInformation.NugetPackageUrl, "https://www.nuget.org/packages/MrMeeseeks.DIE/")]
+[assembly:MiscellaneousInformation(MiscellaneousInformation.NonUrlInformation, "An information that isn't an URL.")]
 
 [assembly:ResolutionStage(ResolutionStage.CompileTime)]
 

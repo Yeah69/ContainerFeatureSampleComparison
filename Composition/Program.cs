@@ -19,13 +19,27 @@ var allAvailableFeatureDescriptions = diContainerComparison
             FeatureDescription: kvpSamples.Value)))
     .ToImmutableDictionary(t => (t.DiContainerName, t.Feature), t => t.FeatureDescription);
 
+var allAvailableMiscellaneousInformation = diContainerComparison
+    .DiContainerDescriptions
+    .SelectMany(kvpContainer =>
+        kvpContainer.Value.MiscellaneousInformation.Select(kvpSamples => (
+            DiContainerName: kvpContainer.Key, 
+            Kind: kvpSamples.Key, 
+            Information: kvpSamples.Value)))
+    .ToImmutableDictionary(t => (t.DiContainerName, t.Kind), t => t.Information);
+
 var featureDescriptionToId = allAvailableFeatureDescriptions
     .Values
     .Select((fd, i) => (fd, $"id{i}"))
     .ToImmutableDictionary(t => t.fd, t => t.Item2);
 
+var allResolutionStage = diContainerComparison
+    .DiContainerDescriptions
+    .Select(kvpContainer => (DiContainerName: kvpContainer.Key, kvpContainer.Value.ResolutionStage))
+    .ToImmutableDictionary(t => t.DiContainerName, t => t.ResolutionStage);
+
 var html = new StringBuilder();
-html.AppendLine($$"""
+html.AppendLine("""
 <!DOCTYPE html>
 <html>
     <head>
@@ -133,6 +147,103 @@ html.AppendLine($$"""
                 <h1>Dependency Injection Container Feature Comparison</h1>
 """);
 
+html.AppendLine("""
+<section>
+    <h2>General Information</h2>
+    <table>
+        <tbody>
+""");
+    
+html.AppendLine("""
+            <tr>
+                <th/>
+""");
+
+foreach (var diContainerName in diContainerNames)
+{
+    html.AppendLine($$"""
+<th>{{diContainerName}}</th>
+""");
+}
+
+html.AppendLine("""
+            </tr>
+""");
+
+foreach (var miscellaneousInformation in Enum.GetValues(typeof(MiscellaneousInformation)).OfType<MiscellaneousInformation>())
+{
+    html.AppendLine($$"""
+            <tr>
+                <td>{{miscellaneousInformation.Humanize(LetterCasing.Title)}}</td>
+""");
+
+    foreach (var diContainerName in diContainerNames)
+    {
+        if (allAvailableMiscellaneousInformation.TryGetValue((diContainerName, miscellaneousInformation),
+                out var information))
+        {
+            if (Uri.TryCreate(information, UriKind.Absolute, out var uri))
+            {
+                html.AppendLine($$"""
+<td><a href="{{uri}}">Link</a></td>
+""");
+            }
+            else
+            {
+                html.AppendLine($$"""
+<td>{{information}}</td>
+""");
+            }
+        }
+        else
+        {
+            html.AppendLine("""
+<td>🤷 Unknown</td>
+""");
+        }
+    }
+
+    html.AppendLine("""
+            </tr>
+""");
+}
+
+html.AppendLine("""
+            <tr>
+                <td>Resolution Stage</td>
+""");
+
+foreach (var diContainerName in diContainerNames)
+{
+    if (allResolutionStage.TryGetValue(diContainerName, out var resolutionStage))
+    {
+        var text = resolutionStage is ResolutionStage.CompileTime
+            ? "🔨 Compile-Time"
+            : resolutionStage is ResolutionStage.RunTime
+                ? "🏃 Run-Time"
+                : "🤷 Unknown";
+        html.AppendLine($$"""
+<td>{{text}}</td>
+""");
+    }
+    else
+    {
+        html.AppendLine("""
+<td>🤷 Unknown</td>
+""");
+    }
+}
+
+html.AppendLine("""
+            </tr>
+""");
+
+html.AppendLine("""
+        </tbody>
+    </table>
+</section>
+""");
+
 foreach (var featureGroupDescription in featureGroupDescriptions)
 {
     html.AppendLine($$"""
@@ -143,7 +254,7 @@ foreach (var featureGroupDescription in featureGroupDescriptions)
         <tbody>
 """);
     
-    html.AppendLine($$"""
+    html.AppendLine("""
 <tr>
     <th>Feature</th>
 """);
@@ -155,7 +266,7 @@ foreach (var featureGroupDescription in featureGroupDescriptions)
 """);
     }
 
-    html.AppendLine($$"""
+    html.AppendLine("""
 </tr>
 """);
     
@@ -197,7 +308,7 @@ foreach (var featureGroupDescription in featureGroupDescriptions)
             }
             else
             {
-                html.AppendLine($"<td>{GenerateFeatureStateCell("✗ Unknown", "status_cross")}</td>");
+                html.AppendLine($"<td>{GenerateFeatureStateCell("🤷 Unknown", "status_cross")}</td>");
             }
 
             string GenerateFeatureStateCell(string label, string styleClass, IFeatureDescription? associatedFeatureDescription = null)
@@ -215,7 +326,7 @@ foreach (var featureGroupDescription in featureGroupDescriptions)
             }
         }
 
-        html.AppendLine($$"""
+        html.AppendLine("""
 </tr>
 """);
         
@@ -250,14 +361,14 @@ foreach (var featureGroupDescription in featureGroupDescriptions)
         }
     }
     
-    html.AppendLine($$"""
+    html.AppendLine("""
         </tbody>
     </table>
 </section>
 """);
 }
 
-html.AppendLine($$"""
+html.AppendLine("""
             </div>
         </main>
 
