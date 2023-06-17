@@ -1,44 +1,11 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using System.Collections.Immutable;
 using System.Text;
+using ContainerFeatureSampleComparison.Composition;
 using ContainerFeatureSampleComparison.FeatureDefinitions;
 using Humanizer;
 
-var diContainerComparison = ContainerFeatureSampleComparison.Generated.Descriptions.CreateDiContainerComparison();
-var featureGroupDescriptions = ContainerFeatureSampleComparison.Generated.Descriptions.CreateFeatureGroupDescriptions();
-
-var diContainerNames = diContainerComparison.DiContainerDescriptions.Keys.OrderBy(x => x).ToList();
-
-var allAvailableFeatureDescriptions = diContainerComparison
-    .DiContainerDescriptions
-    .SelectMany(kvpContainer =>
-        kvpContainer.Value.FeatureSamples.Select(kvpSamples => (
-            DiContainerName: kvpContainer.Key, 
-            Feature: kvpSamples.Key, 
-            FeatureDescription: kvpSamples.Value)))
-    .ToImmutableDictionary(t => (t.DiContainerName, t.Feature), t => t.FeatureDescription);
-
-var allAvailableMiscellaneousInformation = diContainerComparison
-    .DiContainerDescriptions
-    .SelectMany(kvpContainer =>
-        kvpContainer.Value.MiscellaneousInformation.Select(kvpSamples => (
-            DiContainerName: kvpContainer.Key, 
-            Kind: kvpSamples.Key, 
-            Information: kvpSamples.Value)))
-    .ToImmutableDictionary(t => (t.DiContainerName, t.Kind), t => t.Information);
-
-var idMap = allAvailableFeatureDescriptions
-    .Values
-    .OfType<object>()
-    .Concat(featureGroupDescriptions.SelectMany(g => g.Features))
-    .Select((fd, i) => (fd, $"id{i}"))
-    .ToImmutableDictionary(t => t.fd, t => t.Item2);
-
-var allResolutionStage = diContainerComparison
-    .DiContainerDescriptions
-    .Select(kvpContainer => (DiContainerName: kvpContainer.Key, kvpContainer.Value.ResolutionStage))
-    .ToImmutableDictionary(t => t.DiContainerName, t => t.ResolutionStage);
+var compositionData = CompositionData.Create();
 
 var html = new StringBuilder();
 html.AppendLine("""
@@ -161,7 +128,7 @@ html.AppendLine("""
                 <th/>
 """);
 
-foreach (var diContainerName in diContainerNames)
+foreach (var diContainerName in compositionData.DiContainerNames)
 {
     html.AppendLine($$"""
 <th>{{diContainerName}}</th>
@@ -179,9 +146,9 @@ foreach (var miscellaneousInformation in Enum.GetValues(typeof(MiscellaneousInfo
                 <td>{{miscellaneousInformation.Humanize(LetterCasing.Title)}}</td>
 """);
 
-    foreach (var diContainerName in diContainerNames)
+    foreach (var diContainerName in compositionData.DiContainerNames)
     {
-        if (allAvailableMiscellaneousInformation.TryGetValue((diContainerName, miscellaneousInformation),
+        if (compositionData.AllAvailableMiscellaneousInformation.TryGetValue((diContainerName, miscellaneousInformation),
                 out var information))
         {
             if (Uri.TryCreate(information, UriKind.Absolute, out var uri))
@@ -215,9 +182,9 @@ html.AppendLine("""
                 <td>Resolution Stage</td>
 """);
 
-foreach (var diContainerName in diContainerNames)
+foreach (var diContainerName in compositionData.DiContainerNames)
 {
-    if (allResolutionStage.TryGetValue(diContainerName, out var resolutionStage))
+    if (compositionData.AllResolutionStage.TryGetValue(diContainerName, out var resolutionStage))
     {
         var text = resolutionStage is ResolutionStage.CompileTime
             ? "🔨 Compile-Time"
@@ -246,7 +213,7 @@ html.AppendLine("""
 </section>
 """);
 
-foreach (var featureGroupDescription in featureGroupDescriptions)
+foreach (var featureGroupDescription in compositionData.FeatureGroupDescriptions)
 {
     html.AppendLine($$"""
 <section>
@@ -261,7 +228,7 @@ foreach (var featureGroupDescription in featureGroupDescriptions)
     <th>Feature</th>
 """);
 
-    foreach (var diContainerName in diContainerNames)
+    foreach (var diContainerName in compositionData.DiContainerNames)
     {
         html.AppendLine($$"""
 <th>{{diContainerName}}</th>
@@ -276,12 +243,12 @@ foreach (var featureGroupDescription in featureGroupDescriptions)
     {
         html.AppendLine($$"""
 <tr>
-    <td><div class="zoom" onclick="openDescriptionBox('{{idMap[featureDescription]}}')">{{featureDescription.Title.Humanize(LetterCasing.Title)}} 🔍</div></td>
+    <td><div class="zoom" onclick="openDescriptionBox('{{compositionData.IdMap[featureDescription]}}')">{{featureDescription.Title.Humanize(LetterCasing.Title)}} 🔍</div></td>
 """);
 
-        foreach (var diContainerName in diContainerNames)
+        foreach (var diContainerName in compositionData.DiContainerNames)
         {
-            if (allAvailableFeatureDescriptions.TryGetValue(
+            if (compositionData.AllAvailableFeatureDescriptions.TryGetValue(
                     (diContainerName, featureDescription.Feature), 
                     out var specificFeatureDescription))
             {
@@ -316,7 +283,7 @@ foreach (var featureGroupDescription in featureGroupDescriptions)
             string GenerateFeatureStateCell(string label, string styleClass, IFeatureDescription? associatedFeatureDescription = null)
             {
                 var onclick = associatedFeatureDescription is not null
-                    ? $" onclick=\"openDescriptionBox('{idMap[associatedFeatureDescription]}')\""
+                    ? $" onclick=\"openDescriptionBox('{compositionData.IdMap[associatedFeatureDescription]}')\""
                     : "";
                 var labelSuffix = associatedFeatureDescription is not null
                     ? " 🔍"
@@ -333,24 +300,24 @@ foreach (var featureGroupDescription in featureGroupDescriptions)
 """);
             
         html.AppendLine($$"""
-<tr id="{{idMap[featureDescription]}}" class="description_box">
-    <td colspan="{{diContainerNames.Count + 1}}">
-        <pre>{{featureGroupDescription.Description}}</pre>
+<tr id="{{compositionData.IdMap[featureDescription]}}" class="description_box">
+    <td colspan="{{compositionData.DiContainerNames.Count + 1}}">
+        <pre>{{featureDescription.Description}}</pre>
     </td>
 </tr>
 """);
 
-        foreach (var diContainerName in diContainerNames)
+        foreach (var diContainerName in compositionData.DiContainerNames)
         {
-            if (allAvailableFeatureDescriptions.TryGetValue(
+            if (compositionData.AllAvailableFeatureDescriptions.TryGetValue(
                     (diContainerName, featureDescription.Feature), 
                     out var specificFeatureDescription))
             {
                 if (specificFeatureDescription is FeatureSampleDescription featureSampleDescription)
                 {
                     html.AppendLine($$"""
-<tr id="{{idMap[featureSampleDescription]}}" class="description_box">
-    <td colspan="{{diContainerNames.Count + 1}}">
+<tr id="{{compositionData.IdMap[featureSampleDescription]}}" class="description_box">
+    <td colspan="{{compositionData.DiContainerNames.Count + 1}}">
         <pre><code>{{featureSampleDescription.SampleCode}}</code></pre>
     </td>
 </tr>
@@ -359,8 +326,8 @@ foreach (var featureGroupDescription in featureGroupDescriptions)
                 if (specificFeatureDescription is MissingFeatureDescription { Hint: {} hint } missingFeatureDescription)
                 {
                     html.AppendLine($$"""
-<tr id="{{idMap[missingFeatureDescription]}}" class="description_box">
-    <td colspan="{{diContainerNames.Count + 1}}">
+<tr id="{{compositionData.IdMap[missingFeatureDescription]}}" class="description_box">
+    <td colspan="{{compositionData.DiContainerNames.Count + 1}}">
         <pre>{{hint}}</pre>
     </td>
 </tr>
