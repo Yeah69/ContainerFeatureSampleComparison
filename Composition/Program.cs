@@ -28,8 +28,10 @@ var allAvailableMiscellaneousInformation = diContainerComparison
             Information: kvpSamples.Value)))
     .ToImmutableDictionary(t => (t.DiContainerName, t.Kind), t => t.Information);
 
-var featureDescriptionToId = allAvailableFeatureDescriptions
+var idMap = allAvailableFeatureDescriptions
     .Values
+    .OfType<object>()
+    .Concat(featureGroupDescriptions.SelectMany(g => g.Features))
     .Select((fd, i) => (fd, $"id{i}"))
     .ToImmutableDictionary(t => t.fd, t => t.Item2);
 
@@ -136,7 +138,7 @@ html.AppendLine("""
 
             .status_cross {
               color: white;
-              background-color: #CC79A7;
+              background-color: #D55E00;
               border: 3px dotted black;
             }
     </style>
@@ -274,8 +276,8 @@ foreach (var featureGroupDescription in featureGroupDescriptions)
     {
         html.AppendLine($$"""
 <tr>
-    <td>{{featureDescription.Title.Humanize(LetterCasing.Title)}}</td>
-"""); // TODO: Add description
+    <td><div class="zoom" onclick="openDescriptionBox('{{idMap[featureDescription]}}')">{{featureDescription.Title.Humanize(LetterCasing.Title)}} 🔍</div></td>
+""");
 
         foreach (var diContainerName in diContainerNames)
         {
@@ -304,7 +306,7 @@ foreach (var featureGroupDescription in featureGroupDescriptions)
                 };
                 html.AppendLine($$"""
 <td>{{text}}</td>
-"""); // TODO: Add description
+""");
             }
             else
             {
@@ -314,7 +316,7 @@ foreach (var featureGroupDescription in featureGroupDescriptions)
             string GenerateFeatureStateCell(string label, string styleClass, IFeatureDescription? associatedFeatureDescription = null)
             {
                 var onclick = associatedFeatureDescription is not null
-                    ? $" onclick=\"openDescriptionBox('{featureDescriptionToId[associatedFeatureDescription]}')\""
+                    ? $" onclick=\"openDescriptionBox('{idMap[associatedFeatureDescription]}')\""
                     : "";
                 var labelSuffix = associatedFeatureDescription is not null
                     ? " 🔍"
@@ -329,7 +331,14 @@ foreach (var featureGroupDescription in featureGroupDescriptions)
         html.AppendLine("""
 </tr>
 """);
-        
+            
+        html.AppendLine($$"""
+<tr id="{{idMap[featureDescription]}}" class="description_box">
+    <td colspan="{{diContainerNames.Count + 1}}">
+        <pre>{{featureGroupDescription.Description}}</pre>
+    </td>
+</tr>
+""");
 
         foreach (var diContainerName in diContainerNames)
         {
@@ -340,7 +349,7 @@ foreach (var featureGroupDescription in featureGroupDescriptions)
                 if (specificFeatureDescription is FeatureSampleDescription featureSampleDescription)
                 {
                     html.AppendLine($$"""
-<tr id="{{featureDescriptionToId[featureSampleDescription]}}" class="description_box">
+<tr id="{{idMap[featureSampleDescription]}}" class="description_box">
     <td colspan="{{diContainerNames.Count + 1}}">
         <pre><code>{{featureSampleDescription.SampleCode}}</code></pre>
     </td>
@@ -350,9 +359,9 @@ foreach (var featureGroupDescription in featureGroupDescriptions)
                 if (specificFeatureDescription is MissingFeatureDescription { Hint: {} hint } missingFeatureDescription)
                 {
                     html.AppendLine($$"""
-<tr id="{{featureDescriptionToId[missingFeatureDescription]}}" class="description_box">
+<tr id="{{idMap[missingFeatureDescription]}}" class="description_box">
     <td colspan="{{diContainerNames.Count + 1}}">
-        <pre><code>{{hint}}</code></pre>
+        <pre>{{hint}}</pre>
     </td>
 </tr>
 """);
