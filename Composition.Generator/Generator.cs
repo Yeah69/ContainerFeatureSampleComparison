@@ -61,15 +61,12 @@ var ret = new {{wellKnownTypes.ListOfFeatureGroupDescriptionType.FullName()}}();
                 .OfType<IFieldSymbol>()
                 .Select(fs =>
                 {
-                    var featureGroupAssignment = fs.GetAttributes().SingleOrDefault(ad => SymbolEqualityComparer.Default.Equals(wellKnownTypes.FeatureGroupAssignmentAttributeType, ad.AttributeClass));
-                    var enumMember = fs.GetAttributes().SingleOrDefault(ad => SymbolEqualityComparer.Default.Equals(wellKnownTypes.EnumMemberAttributeType, ad.AttributeClass));
-                    var featureGroupAssignmentValue = featureGroupAssignment is not null
-                        ? ((FeatureGroup?)(int?)featureGroupAssignment.ConstructorArguments[0].Value) ?? FeatureGroup.Other
+                    var featureEnumInfo = fs.GetAttributes().SingleOrDefault(ad => SymbolEqualityComparer.Default.Equals(wellKnownTypes.FeatureEnumInfoAttributeType, ad.AttributeClass));
+                    var featureGroupAssignmentValue = featureEnumInfo is not null 
+                                                      && featureEnumInfo.TryGetNamedArgument(nameof(FeatureEnumInfoAttribute.FeatureGroup), out var featureGroupAssignment)
+                        ? (FeatureGroup)(int)(featureGroupAssignment.Value ?? FeatureGroup.Other)
                         : FeatureGroup.Other;
-                    var enumMemberValue = enumMember is not null && enumMember.NamedArguments.SingleOrDefault(kvp => kvp.Key == "Value") is var valueKvp
-                        ? valueKvp.Value.Value as string
-                        : null;
-                    return (Feature: fs, FeatureGroupAssignment: featureGroupAssignmentValue, Description: enumMemberValue);
+                    return (Feature: fs, FeatureGroupAssignment: featureGroupAssignmentValue, FeatureEnumInfo: featureEnumInfo);
                 })
                 .GroupBy(t => t.FeatureGroupAssignment)
                 .ToList();
@@ -94,9 +91,17 @@ var ret = new {{wellKnownTypes.ListOfFeatureGroupDescriptionType.FullName()}}();
             {
                 code.AppendLine($"var group{i} = new {wellKnownTypes.ListOfFeatureDescriptionType.FullName()}();");
                 var featureGroup = groupedFeatureValue.Key;
-                foreach (var (feature, _, enumMember) in groupedFeatureValue)
+                foreach (var (feature, _, featureEnumInfo) in groupedFeatureValue)
                 {
-                    code.AppendLine($"group{i}.Add(new {wellKnownTypes.FeatureDescriptionType.FullName()}({wellKnownTypes.FeatureType.FullName()}.{feature.Name}, \"{feature.Name}\", \"{enumMember ?? ""}\"));");
+                    var title = featureEnumInfo is not null 
+                                && featureEnumInfo.TryGetNamedArgument(nameof(FeatureEnumInfoAttribute.Title), out var titleArg) 
+                                && titleArg.Value is string titleArgValue
+                        ? titleArgValue
+                        : feature.Name;
+                    var description = featureEnumInfo is not null && featureEnumInfo.TryGetNamedArgument(nameof(FeatureEnumInfoAttribute.Description), out var descriptionArg)
+                        ? descriptionArg.Value as string
+                        : null;
+                    code.AppendLine($"group{i}.Add(new {wellKnownTypes.FeatureDescriptionType.FullName()}({wellKnownTypes.FeatureType.FullName()}.{feature.Name}, \"{title}\", \"{description ?? ""}\"));");
                 }
                 code.AppendLine($"ret.Add(new {wellKnownTypes.FeatureGroupDescriptionType.FullName()}({wellKnownTypes.FeatureGroupType.FullName()}.{featureGroup.ToString()}, \"{featureGroup.ToString()}\", \"{featureGroupValues[featureGroup.ToString()]}\", group{i}));");
                 i++;

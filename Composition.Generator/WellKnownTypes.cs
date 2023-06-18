@@ -8,7 +8,7 @@ namespace ContainerFeatureSampleComparison.SampleAggregationGenerator;
 
 internal record WellKnownTypes(
     // Attributes
-    INamedTypeSymbol FeatureGroupAssignmentAttributeType,
+    INamedTypeSymbol FeatureEnumInfoAttributeType,
     
     // Enums
     INamedTypeSymbol FeatureType,
@@ -40,7 +40,7 @@ internal record WellKnownTypes(
 
         return new WellKnownTypes(
             // Attributes
-            FeatureGroupAssignmentAttributeType: compilation.GetTypeByMetadataNameOrThrow(typeof(FeatureGroupAssignmentAttribute).FullName),
+            FeatureEnumInfoAttributeType: compilation.GetTypeByMetadataNameOrThrow(typeof(FeatureEnumInfoAttribute).FullName),
             
             // Enums
             FeatureType: featureType,
