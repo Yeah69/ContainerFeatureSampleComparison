@@ -213,7 +213,7 @@ html.AppendLine("""
 </section>
 """);
 
-foreach (var featureGroupDescription in compositionData.FeatureGroupDescriptions.OrderBy(g => g.Features.MinBy(f => f.Feature)))
+foreach (var featureGroupDescription in compositionData.FeatureGroupDescriptions.OrderBy(g => g.Features.MinBy(f => f.Feature)?.Feature ?? (Feature) int.MaxValue))
 {
     html.AppendLine($$"""
 <section>
