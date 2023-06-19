@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.Collections.ObjectModel;
 using ContainerFeatureSampleComparison.FeatureDefinitions;
 
 namespace ContainerFeatureSampleComparison.Composition;

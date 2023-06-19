@@ -41,27 +41,73 @@ public enum Feature
         Description = "If a instantiated type has multiple constructors, the container chooses the constructor with the most resolvable parameters.")]
     ConstructorMultipleThenMostParameters,
     
-    [FeatureEnumInfo(
-        Description = "This feature is not supported, because of technical reasons.")]
-    NotSupported,
-    [FeatureEnumInfo(
-        Description = "This feature is not implemented yet. But it is planned to be implemented in the future.")]
-    Unimplemented,
-    [FeatureEnumInfo(
-        Description = "This feature is not implemented because of a design decision in favor of ….")]
-    DesignDecision,
-    [FeatureEnumInfo(
-        Description = "This feature is not supported, because of technical reasons.")]
-    NotSupportedNoHint,
-    [FeatureEnumInfo(
-        Description = "This feature is not implemented yet. But it is planned to be implemented in the future.")]
-    UnimplementedNoHint,
-    [FeatureEnumInfo(
-        Description = "This feature is not implemented because of a design decision in favor of ….")]
-    DesignDecisionNoHint,
-    [FeatureEnumInfo(
-        Description = "The state of this feature is unknown.")]
-    Unknown,
+    ConstructorInjectionVanilla,
+    ConstructorInjectionNullableNullCase,
+    ConstructorInjectionNullableNotNullCase,
+    ConstructorInjectionExplicitConstructorChoice,
+    ConstructorInjectionStructParameterlessConstructorIgnored,
+    ConstructorInjectionRecordCopyConstructorIgnored,
+    
+    PropertyInjectionImplicitForInit,
+    PropertyInjectionExplicitChoice,
+    PropertyInjectionNullableNullCase,
+    PropertyInjectionNullableNotNullCase,
+    
+    CollectionInjectionIEnumerable,
+    CollectionInjectionArray,
+    CollectionInjectionIReadOnlyList,
+    CollectionInjectionIList,
+    CollectionInjectionReadOnlyList,
+    CollectionInjectionList,
+    CollectionInjectionRemainingCollectionTypes,
+    CollectionInjectionCollectionChoice,
+    
+    TupleInjectionTuple,
+    TupleInjectionValueTupleSyntax,
+    TupleInjectionValueTuple,
+    
+    ScopeVanilla,
+    ScopeTransientScope,
+    
+    ScopedInstanceScope,
+    ScopedInstanceContainer,
+    
+    GenericsVanilla,
+    GenericsOpenFillIns,
+    
+    TypeInitializerVanilla,
+    TypeInitializerWithParameters,
+    TypeInitializerNullableNullCase,
+    TypeInitializerNullableNotNullCase,
+    
+    AsyncSupportAsyncTypeInitializer,
+    AsyncSupportNotWrapped,
+    AsyncSupportWrappedTask,
+    AsyncSupportWrappedValueTask,
+    AsyncSupportWrappedIAsyncEnumerable,
+    
+    DisposalIDisposable,
+    DisposalIAsyncDisposable,
+    DisposalTransient,
+    DisposalAsyncTransient,
+    DisposalScope,
+    
+    CustomizationCustomFactory,
+    CustomizationCustomParameterInjection,
+    CustomPropertyInjection,
+    
+    DecoratorPatternSingleDecorator,
+    DecoratorPatternMultipleDecorators,
+    DecoratorPatternExplicitOrder,
+    DecoratorPatternDifferentOrderPerType,
+    DecoratorPatternDefaultOrder,
+    
+    CompositePatternIEnumerable,
+    CompositePatternDecorated,
+    
+    MiscInitializedInstanceContainer,
+    MiscInitializedInstanceScope,
+    MiscMarkerInterface,
 }
 
 public enum MissingFeatureReason
@@ -77,8 +123,6 @@ public enum MiscellaneousInformation
     LicenseUrl,
     NugetPackageUrl,
     DocumentationUrl,
-    NonUrlInformation,
-    Unknown,
 }
 
 public enum ResolutionStage

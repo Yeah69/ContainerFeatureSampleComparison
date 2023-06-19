@@ -213,7 +213,7 @@ html.AppendLine("""
 </section>
 """);
 
-foreach (var featureGroupDescription in compositionData.FeatureGroupDescriptions)
+foreach (var featureGroupDescription in compositionData.FeatureGroupDescriptions.OrderBy(g => g.Features.MinBy(f => f.Feature)))
 {
     html.AppendLine($$"""
 <section>
@@ -239,11 +239,14 @@ foreach (var featureGroupDescription in compositionData.FeatureGroupDescriptions
 </tr>
 """);
     
-    foreach (var featureDescription in featureGroupDescription.Features)
+    foreach (var featureDescription in featureGroupDescription.Features.OrderBy(f => f.Feature))
     {
+        var title = featureDescription.Title.Contains(' ')
+            ? featureDescription.Title
+            : featureDescription.Title.Humanize(LetterCasing.Title);
         html.AppendLine($$"""
 <tr>
-    <td><div class="zoom" onclick="openDescriptionBox('{{compositionData.IdMap[featureDescription]}}')">{{featureDescription.Title.Humanize(LetterCasing.Title)}} 🔍</div></td>
+    <td><div class="zoom" onclick="openDescriptionBox('{{compositionData.IdMap[featureDescription]}}')">{{title}} 🔍</div></td>
 """);
 
         foreach (var diContainerName in compositionData.DiContainerNames)
