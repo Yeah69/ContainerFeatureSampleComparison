@@ -1,7 +1,7 @@
 ﻿using ContainerFeatureSampleComparison.FeatureDefinitions;
 using MrMeeseeks.DIE.Configuration.Attributes;
 
-[assembly:FeatureSample(Feature.RegisterResolveConcreteClass)]
+[assembly:FeatureSample(Feature.ImplementationsConcreteClass)]
 
 namespace ContainerFeatureSampleComparison.FeatureSamples.MrMeeseeks.DIE.RegisterResolveConcreteClass;
 

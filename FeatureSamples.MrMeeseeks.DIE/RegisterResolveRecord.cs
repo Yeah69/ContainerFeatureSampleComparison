@@ -1,7 +1,7 @@
 ﻿using ContainerFeatureSampleComparison.FeatureDefinitions;
 using MrMeeseeks.DIE.Configuration.Attributes;
 
-[assembly:FeatureSample(Feature.RegisterResolveRecord)]
+[assembly:FeatureSample(Feature.ImplementationsRecord)]
 
 namespace ContainerFeatureSampleComparison.FeatureSamples.MrMeeseeks.DIE.RegisterResolveRecord;
 
