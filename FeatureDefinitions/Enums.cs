@@ -36,11 +36,6 @@ public enum Feature
     ImplementationsStructParameterlessConstructorIgnored,
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Implementations, 
-        Title = "Record Copy Constructor Ignored",
-        Description = "The copy constructor of record types will be ignored. As the copy constructor gets an instance of its own type injected, it would lead to a cyclic dependency. Thus, in general it makes sense to default to ignoring the copy constructor.")]
-    ImplementationsRecordCopyConstructorIgnored,
-    [FeatureEnumInfo(
-        FeatureGroup = FeatureGroup.Implementations, 
         Title = "Nullable Concrete Class (Null Case)",
         Description = "Injection of an instance of a nullable concrete class type. If the container doesn't know of the concrete class, it resolves to null.")]
     ImplementationsNullableConcreteClassNullCase,
@@ -74,22 +69,22 @@ public enum Feature
         FeatureGroup = FeatureGroup.Abstractions, 
         Title = "Nullable Interface (Null Case)",
         Description = "Injection of an instance of a nullable interface type. If the container doesn't know of an implementation for this interface, it resolves to null.")]
-    ImplementationsNullableInterfaceNullCase,
+    AbstractionsNullableInterfaceNullCase,
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Abstractions, 
         Title = "Nullable Interface (Not Null Case)",
         Description = "Injection of an instance of a nullable concrete class type. If the container knows of an implementation for this interface, it resolves to an instance of the implementation.")]
-    ImplementationsNullableInterfaceNotNullCase,
+    AbstractionsNullableInterfaceNotNullCase,
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Abstractions, 
         Title = "Nullable Abstract Class (Null Case)",
         Description = "Injection of an instance of a nullable abstract class type. If the container doesn't know of an implementation for this abstract class type, it resolves to null.")]
-    ImplementationsNullableAbstractClassNullCase,
+    AbstractionsNullableAbstractClassNullCase,
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Abstractions, 
         Title = "Nullable Abstract Class (Not Null Case)",
         Description = "Injection of an instance of a nullable abstract class type. If the container knows of an implementation for this abstract class type, it resolves to an instance of this type.")]
-    ImplementationsNullableAbstractClassNotNullCase,
+    AbstractionsNullableAbstractClassNotNullCase,
     
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Generics, 

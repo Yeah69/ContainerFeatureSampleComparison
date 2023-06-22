@@ -3,7 +3,7 @@ using MrMeeseeks.DIE.Configuration.Attributes;
 
 [assembly:FeatureSample(Feature.AbstractionsAbstractClass)]
 
-namespace ContainerFeatureSampleComparison.FeatureSamples.MrMeeseeks.DIE.RegisterResolveAbstractClass;
+namespace ContainerFeatureSampleComparison.FeatureSamples.MrMeeseeks.DIE.Abstractions.AbstractClass;
 
 internal abstract class AbstractClass
 {

@@ -9,10 +9,11 @@
         
         <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
         <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)\GeneratedFiles</CompilerGeneratedFilesOutputPath>
+        <OutputType>Exe</OutputType>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="MrMeeseeks.DIE" Version="2.0.1" />
+      <PackageReference Include="MrMeeseeks.DIE" Version="2.0.2" />
     </ItemGroup>
 
     <ItemGroup>

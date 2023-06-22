@@ -1,16 +1,16 @@
 ﻿using ContainerFeatureSampleComparison.FeatureDefinitions;
 using MrMeeseeks.DIE.Configuration.Attributes;
 
-[assembly:FeatureSample(Feature.ImplementationsStructRecord)]
+[assembly:FeatureSample(Feature.ImplementationsConcreteClass)]
 
-namespace ContainerFeatureSampleComparison.FeatureSamples.MrMeeseeks.DIE.RegisterResolveStructRecord;
+namespace ContainerFeatureSampleComparison.FeatureSamples.MrMeeseeks.DIE.Implementations.ConcreteClass;
 
-internal record struct StructRecord
+internal class ConcreteClass
 {
 }
 
-[ImplementationAggregation(typeof(StructRecord))]
-[CreateFunction(typeof(StructRecord), "Create")]
+[ImplementationAggregation(typeof(ConcreteClass))]
+[CreateFunction(typeof(ConcreteClass), "Create")]
 internal partial class Container
 {
     private Container() {}
@@ -21,7 +21,7 @@ internal static class Usage
     internal static void Use()
     {
         var container = Container.DIE_CreateContainer();
-        var structRecord = container.Create();
+        var concreteClass = container.Create();
         // Do something with implementation
     }
 }
