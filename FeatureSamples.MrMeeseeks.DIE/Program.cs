@@ -4,6 +4,6 @@ public class Program
 {
     public static void Main()
     {
-        Generics.OpenFillIns.Usage.Use();
+        Iterables.ImplementationsChoice.Usage.Use();
     }
 }
