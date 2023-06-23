@@ -4,6 +4,6 @@ public class Program
 {
     public static void Main()
     {
-        Implementations.NullableStructNotNullCase.Usage.Use();
+        Generics.OpenFillIns.Usage.Use();
     }
 }
