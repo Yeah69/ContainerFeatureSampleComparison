@@ -104,8 +104,8 @@ public enum Feature
     
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Iterables, 
-        Title = "Iterable: IEnumerable",
-        Description = "Resolution of an IEnumerable of T. It should iterate over an instance of each known implementation type of T.")]
+        Title = "Iterable: IEnumerable<T>",
+        Description = "Resolution of an IEnumerable<T>. It should iterate over an instance of each known implementation type of T.")]
     IterablesIEnumerable,
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Iterables, 
@@ -114,23 +114,23 @@ public enum Feature
     IterablesArray,
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Iterables, 
-        Title = "Iterable: IReadOnlyList",
-        Description = "Resolution of IReadOnlyList of T. It should contain an instance of each known implementation type of T.")]
+        Title = "Iterable: IReadOnlyList<T>",
+        Description = "Resolution of IReadOnlyList<T>. It should contain an instance of each known implementation type of T.")]
     IterablesIReadOnlyList,
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Iterables, 
-        Title = "Iterable: IList",
-        Description = "Resolution of IList of T. It should contain an instance of each known implementation type of T.")]
+        Title = "Iterable: IList<T>",
+        Description = "Resolution of IList<T>. It should contain an instance of each known implementation type of T.")]
     IterablesIList,
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Iterables, 
-        Title = "Iterable: ReadOnlyCollection",
-        Description = "Resolution of ReadOnlyCollection of T. It should contain an instance of each known implementation type of T.")]
+        Title = "Iterable: ReadOnlyCollection<T>",
+        Description = "Resolution of ReadOnlyCollection<T>. It should contain an instance of each known implementation type of T.")]
     IterablesReadOnlyCollection,
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Iterables, 
-        Title = "Iterable: List",
-        Description = "Resolution of List of T. It should contain an instance of each known implementation type of T.")]
+        Title = "Iterable: List<T>",
+        Description = "Resolution of List<T>. It should contain an instance of each known implementation type of T.")]
     IterablesList,
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Iterables, 
@@ -145,39 +145,39 @@ public enum Feature
     
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Factories, 
-        Title = "Factory: Func",
-        Description = "Resolution of a Func of T. Such a factory delays the resolution of a T-instance to whenever the owning component see fit. Also it allows to resolve multiple instances of T (as long as T isn't shared in the current scope).")]
+        Title = "Factory: Func<T>",
+        Description = "Resolution of a Func<T>. Such a factory delays the resolution of a T-instance to whenever the owning component see fit. Also it allows to resolve multiple instances of T (as long as T isn't shared in the current scope).")]
     FactoriesFunc,
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Factories, 
-        Title = "Factory: Func with Parameter",
-        Description = "Resolution of a Func of TA & T with TA-parameter being used for TA-dependencies in T. Works much like a resolution of a Func of T. The difference is that the factory is able to resolve T with the help of a parameter of type TA. This is practical for parameter types which are usually not registered in the container (such as strings, enums or numeric types).")]
+        Title = "Factory: Func<TA, T>",
+        Description = "Resolution of a Func<TA, T> with TA-parameter being used for TA-dependencies in T. Works much like a resolution of a Func<T>. The difference is that the factory is able to resolve T with the help of a parameter of type TA. This is practical for parameter types which are usually not registered in the container (such as strings, enums or numeric types).")]
     FactoriesFuncWithParameter,
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Factories, 
-        Title = "Factory: Func with Parameter for Sub-Dependencies",
-        Description = "Resolution of a Func of TA & T with TA being used for TA-dependencies in T and in T's sub-dependencies transitively. Works like the ordinary Func of TA & T resolution, but with TA also being used for sub-dependencies.")]
+        Title = "Factory: Func<TA, T> (Sub-Dependencies)",
+        Description = "Resolution of a Func<TA, T> with TA being used for TA-dependencies in T and in T's sub-dependencies transitively. Works like the ordinary Func<TA, T> resolution, but with TA also being used for sub-dependencies.")]
     FactoriesFuncWithParameterForSubDependencies,
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Factories, 
-        Title = "Factory: Lazy",
-        Description = "Resolution of a Lazy of T. Such a factory (via the 'Value'-property of Lazy of T) delays the resolution of a T-instance to whenever the owning component see fit. The conceptual difference to Func is that it can only resolve a single instance.")]
+        Title = "Factory: Lazy<T>",
+        Description = "Resolution of a Lazy<T>. Such a factory (via the 'Value'-property of Lazy<T>) delays the resolution of a T-instance to whenever the owning component see fit. The conceptual difference to Func is that it can only resolve a single instance.")]
     FactoriesLazy,
 
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Tuples, 
-        Title = "Tuple: Tuple",
+        Title = "Tuple: Tuple<T>",
         Description = "Resolution of Tuple. The tuple items should be resolved if they would be a resolution on their own.")]
     TuplesTuple,
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Tuples, 
-        Title = "Tuple: ValueTuple (Syntax)",
-        Description = "Resolution of the Syntax ValueTuple. The tuple items should be resolved if they would be a resolution on their own.")]
+        Title = "Tuple: ValueTuple<T> (Syntax)",
+        Description = "Resolution of the Syntax ValueTuple<T>. The tuple items should be resolved if they would be a resolution on their own.")]
     TuplesValueTupleSyntax,
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Tuples, 
-        Title = "Tuple: ValueTuple",
-        Description = "Resolution of ValueTuple. The tuple items should be resolved if they would be a resolution on their own.")]
+        Title = "Tuple: ValueTuple<T>",
+        Description = "Resolution of ValueTuple<T>. The tuple items should be resolved if they would be a resolution on their own.")]
     TuplesValueTuple,
     
     
@@ -221,27 +221,27 @@ public enum Feature
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Async, 
         Title = "Injecting Async Dependency (Not Wrapped)",
-        Description = "Injection of an async dependency (e.g. one which has an async type initializer), where the dependency isn't wrapped into a Task of T, a ValueTask of T or an IAsyncEnumerable of T.")]
+        Description = "Injection of an async dependency (e.g. one which has an async type initializer), where the dependency isn't wrapped into a Task<T>, a ValueTask<T> or an IAsyncEnumerable<T>.")]
     AsyncNotWrapped,
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Async, 
-        Title = "Injecting Async Dependency (Task)",
-        Description = "Injection of an async dependency (e.g. one which has an async type initializer), where the dependency is wrapped into a Task of T.")]
+        Title = "Injecting Async Dependency (Task<T>)",
+        Description = "Injection of an async dependency (e.g. one which has an async type initializer), where the dependency is wrapped into a Task<T>.")]
     AsyncWrappedTask,
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Async, 
-        Title = "Injecting Async Dependency (ValueTask)",
-        Description = "Injection of an async dependency (e.g. one which has an async type initializer), where the dependency is wrapped into a ValueTask of T.")]
+        Title = "Injecting Async Dependency (ValueTask<T>)",
+        Description = "Injection of an async dependency (e.g. one which has an async type initializer), where the dependency is wrapped into a ValueTask<T>.")]
     AsyncWrappedValueTask,
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Async, 
-        Title = "Injecting Async Dependency (IEnumerable)",
-        Description = "Injection of an iterable of async dependencies (e.g. one which has an async type initializer), where the iterable of dependencies is not wrapped into an IAsyncEnumerable of T.")]
+        Title = "Injecting Async Dependency (IEnumerable<T>)",
+        Description = "Injection of an iterable of async dependencies (e.g. one which has an async type initializer), where the iterable of dependencies is not wrapped into an IAsyncEnumerable<T>.")]
     AsyncNotWrappedIEnumerable,
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Async, 
-        Title = "Injecting Async Dependencies (IAsyncEnumerable)",
-        Description = "Injection of an iterable of async dependencies (e.g. one which has an async type initializer), where the iterable of the dependencies is wrapped into an IAsyncEnumerable of T.")]
+        Title = "Injecting Async Dependencies (IAsyncEnumerable<T>)",
+        Description = "Injection of an iterable of async dependencies (e.g. one which has an async type initializer), where the iterable of the dependencies is wrapped into an IAsyncEnumerable<T>.")]
     AsyncWrappedIAsyncEnumerable,
     
     [FeatureEnumInfo(
@@ -424,7 +424,7 @@ public enum FeatureGroup
     Generics,
     [EnumMember(Value = "Group of features concerned with resolving iterable types.")]
     Iterables,
-    [EnumMember(Value = "Group of features concerned with resolving factory types. Factories here are functors (Func of T, Lazy of T) that are automatically generated by the DI container.")]
+    [EnumMember(Value = "Group of features concerned with resolving factory types. Factories here are functors (Func<T>, Lazy<T>) that are automatically generated by the DI container.")]
     Factories,
     [EnumMember(Value = "Group of features concerned with tuple types.")]
     Tuples,

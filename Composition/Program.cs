@@ -131,7 +131,7 @@ html.AppendLine("""
 foreach (var diContainerName in compositionData.DiContainerNames)
 {
     html.AppendLine($$"""
-<th>{{diContainerName}}</th>
+<th>{{diContainerName.EscapeHtmlCharacters()}}</th>
 """);
 }
 
@@ -143,7 +143,7 @@ foreach (var miscellaneousInformation in Enum.GetValues(typeof(MiscellaneousInfo
 {
     html.AppendLine($$"""
             <tr>
-                <td>{{miscellaneousInformation.Humanize(LetterCasing.Title)}}</td>
+                <td>{{miscellaneousInformation.Humanize(LetterCasing.Title).EscapeHtmlCharacters()}}</td>
 """);
 
     foreach (var diContainerName in compositionData.DiContainerNames)
@@ -160,7 +160,7 @@ foreach (var miscellaneousInformation in Enum.GetValues(typeof(MiscellaneousInfo
             else
             {
                 html.AppendLine($$"""
-<td>{{information}}</td>
+<td>{{information.EscapeHtmlCharacters()}}</td>
 """);
             }
         }
@@ -192,7 +192,7 @@ foreach (var diContainerName in compositionData.DiContainerNames)
                 ? "🏃 Run-Time"
                 : "🤷 Unknown";
         html.AppendLine($$"""
-<td>{{text}}</td>
+<td>{{text.EscapeHtmlCharacters()}}</td>
 """);
     }
     else
@@ -217,8 +217,8 @@ foreach (var featureGroupDescription in compositionData.FeatureGroupDescriptions
 {
     html.AppendLine($$"""
 <section>
-    <h2>{{featureGroupDescription.Title.Humanize(LetterCasing.Title)}}</h2>
-    <div>{{(!string.IsNullOrEmpty(featureGroupDescription.Description) ? $"<p>{featureGroupDescription.Description}</p>" : string.Empty)}}</div>
+    <h2>{{featureGroupDescription.Title.Humanize(LetterCasing.Title).EscapeHtmlCharacters()}}</h2>
+    <div>{{(!string.IsNullOrEmpty(featureGroupDescription.Description) ? $"<p>{featureGroupDescription.Description.EscapeHtmlCharacters()}</p>" : string.Empty)}}</div>
     <table>
         <tbody>
 """);
@@ -231,7 +231,7 @@ foreach (var featureGroupDescription in compositionData.FeatureGroupDescriptions
     foreach (var diContainerName in compositionData.DiContainerNames)
     {
         html.AppendLine($$"""
-<th>{{diContainerName}}</th>
+<th>{{diContainerName.EscapeHtmlCharacters()}}</th>
 """);
     }
 
@@ -246,7 +246,7 @@ foreach (var featureGroupDescription in compositionData.FeatureGroupDescriptions
             : featureDescription.Title.Humanize(LetterCasing.Title);
         html.AppendLine($$"""
 <tr>
-    <td><div class="zoom" onclick="openDescriptionBox('{{compositionData.IdMap[featureDescription]}}')">{{title}} 🔍</div></td>
+    <td><div class="zoom" onclick="openDescriptionBox('{{compositionData.IdMap[featureDescription]}}')">{{title.EscapeHtmlCharacters()}} 🔍</div></td>
 """);
 
         foreach (var diContainerName in compositionData.DiContainerNames)
@@ -294,7 +294,7 @@ foreach (var featureGroupDescription in compositionData.FeatureGroupDescriptions
                 var cursorClass = associatedFeatureDescription is not null
                     ? " zoom"
                     : "";
-                return $"<button class=\"{styleClass}{cursorClass}\"{onclick}>{label}{labelSuffix}</button>";
+                return $"<button class=\"{styleClass}{cursorClass}\"{onclick}>{label.EscapeHtmlCharacters()}{labelSuffix.EscapeHtmlCharacters()}</button>";
             }
         }
 
@@ -305,7 +305,7 @@ foreach (var featureGroupDescription in compositionData.FeatureGroupDescriptions
         html.AppendLine($$"""
 <tr id="{{compositionData.IdMap[featureDescription]}}" class="description_box">
     <td colspan="{{compositionData.DiContainerNames.Count + 1}}">
-        <pre>{{featureDescription.Description}}</pre>
+        <pre>{{featureDescription.Description.EscapeHtmlCharacters()}}</pre>
     </td>
 </tr>
 """);
@@ -321,7 +321,7 @@ foreach (var featureGroupDescription in compositionData.FeatureGroupDescriptions
                     html.AppendLine($$"""
 <tr id="{{compositionData.IdMap[featureSampleDescription]}}" class="description_box">
     <td colspan="{{compositionData.DiContainerNames.Count + 1}}">
-        <pre><code>{{featureSampleDescription.SampleCode}}</code></pre>
+        <pre><code>{{featureSampleDescription.SampleCode.EscapeHtmlCharacters()}}</code></pre>
     </td>
 </tr>
 """);
@@ -331,7 +331,7 @@ foreach (var featureGroupDescription in compositionData.FeatureGroupDescriptions
                     html.AppendLine($$"""
 <tr id="{{compositionData.IdMap[missingFeatureDescription]}}" class="description_box">
     <td colspan="{{compositionData.DiContainerNames.Count + 1}}">
-        <pre>{{hint}}</pre>
+        <pre>{{hint.EscapeHtmlCharacters()}}</pre>
     </td>
 </tr>
 """);
