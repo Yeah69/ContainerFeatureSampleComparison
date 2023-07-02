@@ -360,12 +360,12 @@ public enum Feature
     DecoratorPatternDefaultOrder,
     
     [FeatureEnumInfo(
-        FeatureGroup = FeatureGroup.DecoratorPattern, 
+        FeatureGroup = FeatureGroup.CompositePattern, 
         Title = "Iterable Injection for Composites",
         Description = "Composite can get an Iterable of its interface injected in order to get the interface instances that it manages.")]
     CompositePatternIEnumerable,
     [FeatureEnumInfo(
-        FeatureGroup = FeatureGroup.DecoratorPattern, 
+        FeatureGroup = FeatureGroup.CompositePattern, 
         Title = "Composite Can Be Decorated",
         Description = "Composite can be decorated as well.")]
     CompositePatternDecorated,
