@@ -24,7 +24,7 @@ internal static class Usage
 {
     internal static void Use()
     {
-        var container = Container.DIE_CreateContainer();
+        using var container = Container.DIE_CreateContainer();
         var valueTuple = container.Create();
         // Do something with items
     }

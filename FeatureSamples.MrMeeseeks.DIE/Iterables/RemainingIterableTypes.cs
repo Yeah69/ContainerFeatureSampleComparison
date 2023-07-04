@@ -52,7 +52,7 @@ internal static class Usage
 {
     internal static void Use()
     {
-        var container = Container.DIE_CreateContainer();
+        using var container = Container.DIE_CreateContainer();
         var iCollection = container.CreateICollection(); // ConcreteClass, Struct, Record, RecordStruct
         var iReadOnlyCollection = container.CreateIReadOnlyCollection(); // ConcreteClass, Struct, Record, RecordStruct
         var readOnlyCollection = container.CreateReadOnlyCollection(); // ConcreteClass, Struct, Record, RecordStruct

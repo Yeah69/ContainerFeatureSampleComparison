@@ -28,7 +28,7 @@ internal static class Usage
 {
     internal static void Use()
     {
-        var container = Container.DIE_CreateContainer();
+        using var container = Container.DIE_CreateContainer();
         var parent = container.Create();
         // Do something with parent and/or its dependencies
     }

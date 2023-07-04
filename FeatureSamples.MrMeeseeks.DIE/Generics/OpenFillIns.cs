@@ -27,7 +27,7 @@ internal static class Usage
 {
     internal static void Use()
     {
-        var container = Container.DIE_CreateContainer();
+        using var container = Container.DIE_CreateContainer();
         // The singular option will fill the open generic parameter with string
         var singular = container.CreateSingular(); // ConcreteClass<int, string>
         // The multiple option will fill the open generic parameter with string, bool and double

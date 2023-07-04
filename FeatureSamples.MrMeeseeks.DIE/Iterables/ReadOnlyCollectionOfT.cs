@@ -33,7 +33,7 @@ internal static class Usage
 {
     internal static void Use()
     {
-        var container = Container.DIE_CreateContainer();
+        using var container = Container.DIE_CreateContainer();
         var iterable = container.Create(); // ConcreteClass, Struct, Record, RecordStruct
         // Do something with implementation
     }

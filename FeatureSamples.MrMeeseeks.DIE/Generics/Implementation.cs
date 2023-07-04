@@ -39,7 +39,7 @@ internal static class Usage
 {
     internal static void Use()
     {
-        var container = Container.DIE_CreateContainer();
+        using var container = Container.DIE_CreateContainer();
         var concreteClassOfInt = container.CreateConcreteClassOfInt();
         var concreteClassOfString = container.CreateConcreteClassOfString();
         var structOfInt = container.CreateStructOfInt();

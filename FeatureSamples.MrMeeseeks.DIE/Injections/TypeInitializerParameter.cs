@@ -25,7 +25,7 @@ internal static class Usage
 {
     internal static void Use()
     {
-        var container = Container.DIE_CreateContainer();
+        using var container = Container.DIE_CreateContainer();
         var parent = container.Create();
         Console.WriteLine($"Is null: {parent.Dependency is null}"); // Is null: False
         // Do something with parent and/or its dependency

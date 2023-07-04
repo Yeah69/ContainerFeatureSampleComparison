@@ -31,7 +31,7 @@ internal static class Usage
 {
     internal static void Use()
     {
-        var container = Container.DIE_CreateContainer();
+        using var container = Container.DIE_CreateContainer();
         var iInterfaceClassOfInt = container.CreateIInterfaceOfInt();
         var iInterfaceOfString = container.CreateIInterfaceOfString();
         var abstractClassOfInt = container.CreateAbstractClassOfInt();

@@ -50,7 +50,7 @@ internal static class Usage
 {
     internal static async Task Use()
     {
-        var container = Container.DIE_CreateContainer();
+        await using var container = Container.DIE_CreateContainer();
         var parent = await container.Create();
         Console.WriteLine($"Initialized: {parent.TaskBasedDependency.Initialized}"); // Initialized: True
         Console.WriteLine($"Initialized: {parent.ValueTaskBasedDependency.Initialized}"); // Initialized: True

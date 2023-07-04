@@ -24,7 +24,7 @@ internal static class Usage
 {
     internal static void Use()
     {
-        var container = Container.DIE_CreateContainer();
+        using var container = Container.DIE_CreateContainer();
         var concreteClassFactory = container.Create();
         var concreteClassA = concreteClassFactory(6);
         var concreteClassB = concreteClassFactory(9);

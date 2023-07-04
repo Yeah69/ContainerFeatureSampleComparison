@@ -30,7 +30,7 @@ internal static class Usage
 {
     internal static void Use()
     {
-        var container = Container.DIE_CreateContainer();
+        using var container = Container.DIE_CreateContainer();
         var parent = container.Create();
         Console.WriteLine($"Parent.Dependency is null: {parent.Dependency is null}"); // Parent.Dependency is null: True
         Console.WriteLine($"Parent.DependencySet is null: {parent.DependencySet is null}"); // Parent.DependencySet is null: False

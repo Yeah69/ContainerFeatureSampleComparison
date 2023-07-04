@@ -32,7 +32,7 @@ internal static class Usage
 {
     internal static void Use()
     {
-        var container = Container.DIE_CreateContainer();
+        using var container = Container.DIE_CreateContainer();
         var concreteClass = container.Create();
         Console.WriteLine($"The value is {concreteClass.Value}"); // The value is 69
     }

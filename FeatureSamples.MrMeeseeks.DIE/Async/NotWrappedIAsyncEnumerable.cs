@@ -49,7 +49,7 @@ internal static class Usage
 {
     internal static async Task Use()
     {
-        var container = Container.DIE_CreateContainer();
+        await using var container = Container.DIE_CreateContainer();
         var parent = container.Create();
         await foreach (var dependency in parent.Dependencies)
         {

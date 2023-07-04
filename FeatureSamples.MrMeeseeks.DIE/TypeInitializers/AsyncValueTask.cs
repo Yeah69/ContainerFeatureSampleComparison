@@ -27,7 +27,7 @@ internal static class Usage
 {
     internal static async ValueTask Use()
     {
-        var container = Container.DIE_CreateContainer();
+        await using var container = Container.DIE_CreateContainer();
         var concreteClass = await container.Create();
         Console.WriteLine($"Initialized: {concreteClass.Initialized}"); // Initialized: True
     }
