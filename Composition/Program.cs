@@ -321,7 +321,7 @@ foreach (var featureGroupDescription in compositionData.FeatureGroupDescriptions
                     html.AppendLine($$"""
 <tr id="{{compositionData.IdMap[featureSampleDescription]}}" class="description_box">
     <td colspan="{{compositionData.DiContainerNames.Count + 1}}">
-        <pre><code>{{featureSampleDescription.SampleCode.EscapeHtmlCharacters()}}</code></pre>
+        <pre><code class="hljs language-csharp">{{featureSampleDescription.SampleCode.EscapeHtmlCharacters()}}</code></pre>
     </td>
 </tr>
 """);
@@ -350,8 +350,11 @@ foreach (var featureGroupDescription in compositionData.FeatureGroupDescriptions
 html.AppendLine("""
             </div>
         </main>
-
+<!-- Shout out to highlight.js project: https://github.com/highlightjs/highlight.js -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/codepen-embed.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
         <script>
+hljs.highlightAll();
 const description_boxes = document.querySelectorAll('.description_box');
 closeAllDescriptionBoxes();
 function closeAllDescriptionBoxes() {
