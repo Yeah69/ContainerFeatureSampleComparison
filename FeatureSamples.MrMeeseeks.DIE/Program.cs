@@ -4,6 +4,6 @@ public class Program
 {
     public static void Main()
     {
-        Iterables.ImplementationsChoice.Usage.Use();
+        Scopes.DefaultFragment.Usage.Use();
     }
 }
