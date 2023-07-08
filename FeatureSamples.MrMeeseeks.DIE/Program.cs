@@ -4,6 +4,6 @@ public class Program
 {
     public static void Main()
     {
-        Scopes.DefaultFragment.Usage.Use();
+        ScopedInstances.Container.Usage.Use();
     }
 }
