@@ -4,6 +4,6 @@ public class Program
 {
     public static void Main()
     {
-        Disposal.Scope.Usage.Use();
+        Customization.CustomCustomTypeInitializerInjection.Usage.Use();
     }
 }
