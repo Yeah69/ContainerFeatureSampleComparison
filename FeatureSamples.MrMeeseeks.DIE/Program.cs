@@ -4,6 +4,6 @@ public class Program
 {
     public static void Main()
     {
-        ScopedInstances.Container.Usage.Use();
+        Disposal.Scope.Usage.Use();
     }
 }
