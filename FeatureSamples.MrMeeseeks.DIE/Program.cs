@@ -4,6 +4,6 @@ public class Program
 {
     public static void Main()
     {
-        Customization.CustomCustomTypeInitializerInjection.Usage.Use();
+        DecoratorPattern.DefaultOrder.Usage.Use();
     }
 }
