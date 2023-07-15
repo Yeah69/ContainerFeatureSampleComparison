@@ -4,6 +4,6 @@ public class Program
 {
     public static void Main()
     {
-        CompositePattern.Decorated.Usage.Use();
+        Misc.InitializedInstance.Usage.Use();
     }
 }
