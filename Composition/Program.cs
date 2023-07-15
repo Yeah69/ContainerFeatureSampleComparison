@@ -351,8 +351,8 @@ html.AppendLine("""
             </div>
         </main>
 <!-- Shout out to highlight.js project: https://github.com/highlightjs/highlight.js -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/codepen-embed.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<link rel="stylesheet" href="styles/codepen-embed.min.css">
+<script src="scripts/highlight.min.js"></script>
         <script>
 hljs.highlightAll();
 const description_boxes = document.querySelectorAll('.description_box');
