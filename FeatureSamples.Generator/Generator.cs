@@ -77,7 +77,7 @@ public class Generator : IIncrementalGenerator
                     wellKnownTypes.MissingFeatureAttributeType))
             {
                 var feature = (Feature?)(int?)attribute.ConstructorArguments[0].Value ??
-                              Feature.AbstractionsInterface;
+                              Feature.AbstractionsInterfaceSingleImplementation;
                 var sampleText = attribute.ApplicationSyntaxReference is { } a
                     ? a.GetSyntax().GetLocation().SourceTree is { } b
                         ? b.GetText().ToString()

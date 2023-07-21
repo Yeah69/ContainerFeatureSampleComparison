@@ -5,10 +5,12 @@ using MrMeeseeks.DIE.Configuration.Attributes;
 
 namespace ContainerFeatureSampleComparison.FeatureSamples.MrMeeseeks.DIE.Abstractions.NullableInterfaceNullCase;
 
+// Simple interface that doesn't have any implementation
 internal interface IInterface
 {
 }
 
+// Utility class to get a nullable injection and check if it is null
 internal class Parent
 {
     internal Parent(IInterface? child) => IsNull = child is null; 

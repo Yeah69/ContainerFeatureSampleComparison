@@ -4,6 +4,6 @@ public class Program
 {
     public static void Main()
     {
-        Misc.InitializedInstance.Usage.Use();
+        Abstractions.AbstractClassSingleImplementation.Usage.Use();
     }
 }

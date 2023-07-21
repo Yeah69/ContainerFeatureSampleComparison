@@ -5,14 +5,17 @@ using MrMeeseeks.DIE.Configuration.Attributes;
 
 namespace ContainerFeatureSampleComparison.FeatureSamples.MrMeeseeks.DIE.Abstractions.NullableInterfaceNotNullCase;
 
+// Simple interface that will work as an abstraction for a concrete class
 internal interface IInterface
 {
 }
 
+// Simple class that will be used as an implementation for the interface
 internal class ConcreteClass : IInterface
 {
 }
 
+// Utility class to get a nullable injection and check if it is null
 internal class Parent
 {
     internal Parent(IInterface? child) => IsNull = child is null; 

@@ -5,14 +5,17 @@ using MrMeeseeks.DIE.Configuration.Attributes;
 
 namespace ContainerFeatureSampleComparison.FeatureSamples.MrMeeseeks.DIE.Abstractions.NullableAbstractClassNotNullCase;
 
+// Simple abstract class that will work as an abstraction for a concrete class
 internal abstract class AbstractClass
 {
 }
 
+// Simple class that will be used as an implementation for the abstract class
 internal class ConcreteClass : AbstractClass
 {
 }
 
+// Utility class to get a nullable injection and check if it is null
 internal class Parent
 {
     internal Parent(AbstractClass? child) => IsNull = child is null; 

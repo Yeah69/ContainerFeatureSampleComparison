@@ -57,14 +57,24 @@ public enum Feature
     
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Abstractions, 
-        Title = "Interface",
-        Description = "An implementing type (concrete class, struct, record) should be assignable to a specified interface, so that it is resolvable.")]
-    AbstractionsInterface,
+        Title = "Interface (Single Implementation)",
+        Description = "Resolution of an interface type which has a single implementation type.")]
+    AbstractionsInterfaceSingleImplementation,
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Abstractions, 
-        Title = "Abstract Class",
-        Description = "An implementing type (concrete class, struct, record) should be assignable to a specified interface, so that it is resolvable.")]
-    AbstractionsAbstractClass,
+        Title = "Abstract Class (Single Implementation)",
+        Description = "Resolution of an abstract class type which has a single implementation type.")]
+    AbstractionsAbstractClassSingleImplementation,
+    [FeatureEnumInfo(
+        FeatureGroup = FeatureGroup.Abstractions, 
+        Title = "Interface (Multiple Implementation)",
+        Description = "Resolution of an interface type which has multiple implementation types.")]
+    AbstractionsInterfaceMultipleImplementation,
+    [FeatureEnumInfo(
+        FeatureGroup = FeatureGroup.Abstractions, 
+        Title = "Abstract Class (Multiple Implementation)",
+        Description = "Resolution of an abstract class type which has multiple implementation types.")]
+    AbstractionsAbstractClassMultipleImplementation,
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Abstractions, 
         Title = "Nullable Interface (Null Case)",
