@@ -4,6 +4,6 @@ public static class Program
 {
     public static void Main()
     {
-        Implementations.NullableStructNullCase.Usage.Use();
+        Abstractions.NullableInterfaceNullCase.Usage.Use();
     }
 }
