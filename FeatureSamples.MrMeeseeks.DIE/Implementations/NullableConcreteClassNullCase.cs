@@ -9,6 +9,7 @@ internal class ConcreteClass
 {
 }
 
+// Utility class to get a nullable injection and check if it is null
 internal class Parent
 {
     internal Parent(ConcreteClass? child) => IsNull = child is null; 

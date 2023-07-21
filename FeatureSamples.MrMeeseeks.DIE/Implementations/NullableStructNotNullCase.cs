@@ -9,12 +9,14 @@ internal struct Struct
 {
 }
 
+// Utility class to get a nullable injection and check if it is null
 internal class Parent
 {
     internal Parent(Struct? child) => IsNull = !child.HasValue; 
     internal bool IsNull { get; }
 }
 
+// Register the Struct as an implementation
 [ImplementationAggregation(typeof(Parent), typeof(Struct))]
 [CreateFunction(typeof(Parent), "Create")]
 internal partial class Container

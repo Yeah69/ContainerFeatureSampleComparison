@@ -9,6 +9,7 @@ internal struct Struct
 {
 }
 
+// Utility class to get a nullable injection and check if it is null
 internal class Parent
 {
     internal Parent(Struct? child) => IsNull = !child.HasValue; 

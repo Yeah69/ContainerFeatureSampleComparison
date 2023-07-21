@@ -16,10 +16,10 @@ internal class ConcreteClass
 }
 
 [ImplementationAggregation(typeof(ConcreteClass))]
-[CreateFunction(typeof(ConcreteClass), "Create")]
-
 // Choose the constructor with the int parameter
 [ConstructorChoice(typeof(ConcreteClass), typeof(int))]
+
+[CreateFunction(typeof(ConcreteClass), "Create")]
 internal partial class Container
 {
     private Container() {}
