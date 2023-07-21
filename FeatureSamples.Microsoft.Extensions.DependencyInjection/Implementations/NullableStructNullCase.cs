@@ -10,6 +10,7 @@ internal struct Struct
 {
 }
 
+// Utility class to get a nullable injection and check if it is null
 internal class Parent
 {
     public Parent(Struct? child) => IsNull = child is null; 
@@ -22,6 +23,7 @@ internal static class Builder
     {
         var builder = Host.CreateApplicationBuilder();
 
+        // Register Struct? but map it to null
         builder.Services.Add(new ServiceDescriptor(typeof(Struct?), _ => null!, ServiceLifetime.Transient));
         builder.Services.AddTransient<Parent>();
         
@@ -37,6 +39,5 @@ internal static class Usage
 
         var parent = host.Services.GetRequiredService<Parent>();
         Console.WriteLine($"Is null: {parent.IsNull}"); // Is null: True
-        // Do something with the instance
     }
 }

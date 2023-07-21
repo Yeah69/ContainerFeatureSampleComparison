@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace ContainerFeatureSampleComparison.FeatureSamples.Microsoft.Extensions.DependencyInjection.Implementations.Struct;
 
+// Simple struct that we want to create values from using a container
 internal struct Struct
 {
 }
@@ -15,7 +16,8 @@ internal static class Builder
     internal static HostApplicationBuilder CreateBuilder()
     {
         var builder = Host.CreateApplicationBuilder();
-
+        
+        // Register Struct and create a new value each time
         builder.Services.Add(new ServiceDescriptor(typeof(Struct), _ => new Struct(), ServiceLifetime.Transient));
         
         return builder;
@@ -30,6 +32,5 @@ internal static class Usage
 
         var value = host.Services.GetRequiredService<Struct>();
         Console.WriteLine(value.GetType().Name); // Struct
-        // Do something with the instance
     }
 }

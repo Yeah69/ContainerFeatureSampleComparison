@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace ContainerFeatureSampleComparison.FeatureSamples.Microsoft.Extensions.DependencyInjection.Implementations.ConcreteClass;
 
+// Simple class that we want to create objects from using a container
 internal class ConcreteClass
 {
 }
@@ -16,6 +17,7 @@ internal static class Builder
     {
         var builder = Host.CreateApplicationBuilder();
 
+        // The type of the class needs to be registered with the container
         builder.Services.AddTransient<ConcreteClass>();
         
         return builder;
@@ -29,6 +31,6 @@ internal static class Usage
         using var host = Builder.CreateBuilder().Build();
 
         var concreteClass = host.Services.GetRequiredService<ConcreteClass>();
-        // Do something with the instance
+        Console.WriteLine(concreteClass.GetType().Name); // ConcreteClass
     }
 }

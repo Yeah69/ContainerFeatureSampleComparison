@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace ContainerFeatureSampleComparison.FeatureSamples.Microsoft.Extensions.DependencyInjection.Implementations.Record;
 
+// Simple record that we want to create objects from using a container
 internal record Record;
 
 internal static class Builder
@@ -14,6 +15,7 @@ internal static class Builder
     {
         var builder = Host.CreateApplicationBuilder();
 
+        // The type of the record needs to be registered with the container
         builder.Services.AddTransient<Record>();
         
         return builder;
@@ -27,6 +29,6 @@ internal static class Usage
         using var host = Builder.CreateBuilder().Build();
 
         var record = host.Services.GetRequiredService<Record>();
-        // Do something with the instance
+        Console.WriteLine(record.GetType().Name); // Record
     }
 }
