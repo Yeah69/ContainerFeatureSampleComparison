@@ -4,6 +4,6 @@ public class Program
 {
     public static void Main()
     {
-        Abstractions.AbstractClassSingleImplementation.Usage.Use();
+        Generics.OpenFillIns.Usage.Use();
     }
 }
