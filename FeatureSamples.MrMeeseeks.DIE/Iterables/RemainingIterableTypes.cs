@@ -8,6 +8,7 @@ using MrMeeseeks.DIE.Configuration.Attributes;
 
 namespace ContainerFeatureSampleComparison.FeatureSamples.MrMeeseeks.DIE.Iterables.RemainingIterableTypes;
 
+// An interface and its implementations
 internal interface IInterface
 {
 }
@@ -16,7 +17,7 @@ internal class ConcreteClass : IInterface
 {
 }
 
-internal class Struct : IInterface
+internal struct Struct : IInterface
 {
 }
 
@@ -24,6 +25,7 @@ internal record Record : IInterface;
 
 internal record struct RecordStruct : IInterface;
 
+// Register the implementations
 [ImplementationAggregation(typeof(ConcreteClass), typeof(Struct), typeof(Record), typeof(RecordStruct))]
 [CreateFunction(typeof(ICollection<IInterface>), "CreateICollection")]
 [CreateFunction(typeof(IReadOnlyCollection<IInterface>), "CreateIReadOnlyCollection")]
@@ -53,24 +55,95 @@ internal static class Usage
     internal static void Use()
     {
         using var container = Container.DIE_CreateContainer();
-        var iCollection = container.CreateICollection(); // ConcreteClass, Struct, Record, RecordStruct
-        var iReadOnlyCollection = container.CreateIReadOnlyCollection(); // ConcreteClass, Struct, Record, RecordStruct
-        var readOnlyCollection = container.CreateReadOnlyCollection(); // ConcreteClass, Struct, Record, RecordStruct
-        var arraySegment = container.CreateArraySegment(); // ConcreteClass, Struct, Record, RecordStruct
-        var concurrentBag = container.CreateConcurrentBag(); // ConcreteClass, Struct, Record, RecordStruct
-        var concurrentQueue = container.CreateConcurrentQueue(); // ConcreteClass, Struct, Record, RecordStruct
-        var concurrentStack = container.CreateConcurrentStack(); // ConcreteClass, Struct, Record, RecordStruct
-        var hashSet = container.CreateHashSet(); // ConcreteClass, Struct, Record, RecordStruct
-        var linkedList = container.CreateLinkedList(); // ConcreteClass, Struct, Record, RecordStruct
-        var queue = container.CreateQueue(); // ConcreteClass, Struct, Record, RecordStruct
-        var stack = container.CreateStack(); // ConcreteClass, Struct, Record, RecordStruct
-        var sortedSet = container.CreateSortedSet(); // ConcreteClass, Struct, Record, RecordStruct
-        var immutableArray = container.CreateImmutableArray(); // ConcreteClass, Struct, Record, RecordStruct
-        var immutableHashSet = container.CreateImmutableHashSet(); // ConcreteClass, Struct, Record, RecordStruct
-        var immutableList = container.CreateImmutableList(); // ConcreteClass, Struct, Record, RecordStruct
-        var immutableQueue = container.CreateImmutableQueue(); // ConcreteClass, Struct, Record, RecordStruct
-        var immutableSortedSet = container.CreateImmutableSortedSet(); // ConcreteClass, Struct, Record, RecordStruct
-        var immutableStack = container.CreateImmutableStack(); // ConcreteClass, Struct, Record, RecordStruct
-        // Do something with implementation
+        var iCollection = container.CreateICollection();
+        foreach (var implementation in iCollection)
+        {
+            Console.WriteLine(implementation.GetType().Name);
+        }
+        var iReadOnlyCollection = container.CreateIReadOnlyCollection();
+        foreach (var implementation in iReadOnlyCollection)
+        {
+            Console.WriteLine(implementation.GetType().Name);
+        }
+        var readOnlyCollection = container.CreateReadOnlyCollection();
+        foreach (var implementation in readOnlyCollection)
+        {
+            Console.WriteLine(implementation.GetType().Name);
+        }
+        var arraySegment = container.CreateArraySegment();
+        foreach (var implementation in arraySegment)
+        {
+            Console.WriteLine(implementation.GetType().Name);
+        }
+        var concurrentBag = container.CreateConcurrentBag();
+        foreach (var implementation in concurrentBag)
+        {
+            Console.WriteLine(implementation.GetType().Name);
+        }
+        var concurrentQueue = container.CreateConcurrentQueue();
+        foreach (var implementation in concurrentQueue)
+        {
+            Console.WriteLine(implementation.GetType().Name);
+        }
+        var concurrentStack = container.CreateConcurrentStack();
+        foreach (var implementation in concurrentStack)
+        {
+            Console.WriteLine(implementation.GetType().Name);
+        }
+        var hashSet = container.CreateHashSet();
+        foreach (var implementation in hashSet)
+        {
+            Console.WriteLine(implementation.GetType().Name);
+        }
+        var linkedList = container.CreateLinkedList();
+        foreach (var implementation in linkedList)
+        {
+            Console.WriteLine(implementation.GetType().Name);
+        }
+        var queue = container.CreateQueue();
+        foreach (var implementation in queue)
+        {
+            Console.WriteLine(implementation.GetType().Name);
+        }
+        var stack = container.CreateStack();
+        foreach (var implementation in stack)
+        {
+            Console.WriteLine(implementation.GetType().Name);
+        }
+        var sortedSet = container.CreateSortedSet();
+        foreach (var implementation in sortedSet)
+        {
+            Console.WriteLine(implementation.GetType().Name);
+        }
+        var immutableArray = container.CreateImmutableArray();
+        foreach (var implementation in immutableArray)
+        {
+            Console.WriteLine(implementation.GetType().Name);
+        }
+        var immutableHashSet = container.CreateImmutableHashSet();
+        foreach (var implementation in immutableHashSet)
+        {
+            Console.WriteLine(implementation.GetType().Name);
+        }
+        var immutableList = container.CreateImmutableList();
+        foreach (var implementation in immutableList)
+        {
+            Console.WriteLine(implementation.GetType().Name);
+        }
+        var immutableQueue = container.CreateImmutableQueue();
+        foreach (var implementation in immutableQueue)
+        {
+            Console.WriteLine(implementation.GetType().Name);
+        }
+        var immutableSortedSet = container.CreateImmutableSortedSet();
+        foreach (var implementation in immutableSortedSet)
+        {
+            Console.WriteLine(implementation.GetType().Name);
+        }
+        var immutableStack = container.CreateImmutableStack();
+        foreach (var implementation in immutableStack)
+        {
+            Console.WriteLine(implementation.GetType().Name);
+        }
     }
 }
