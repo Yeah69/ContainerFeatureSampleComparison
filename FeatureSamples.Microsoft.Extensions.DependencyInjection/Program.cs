@@ -4,6 +4,6 @@ public static class Program
 {
     public static void Main()
     {
-        Generics.Implementation.Usage.Use();
+        Iterables.IEnumerableOfT.Usage.Use();
     }
 }
