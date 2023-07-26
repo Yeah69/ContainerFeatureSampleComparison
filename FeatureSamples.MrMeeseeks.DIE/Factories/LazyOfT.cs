@@ -10,6 +10,8 @@ internal class ConcreteClass
 }
 
 [ImplementationAggregation(typeof(ConcreteClass))]
+// Instead of returning the implementation type directly, return a Lazy<ConcreteClass>
+// which is kind of a factory considering that the Value property creates an instance of the implementation type
 [CreateFunction(typeof(Lazy<ConcreteClass>), "Create")]
 internal partial class Container
 {
@@ -22,7 +24,9 @@ internal static class Usage
     {
         using var container = Container.DIE_CreateContainer();
         var concreteClassFactory = container.Create();
+        // Lazy objects defer the time of creation of the instance to when the Value property is called
+        // Contrary to Func-factories, Lazy-factories only create one instance and can't take parameters
         var concreteClass = concreteClassFactory.Value;
-        // Do something with implementation
+        Console.WriteLine(concreteClass.GetType().Name); // ConcreteClass
     }
 }

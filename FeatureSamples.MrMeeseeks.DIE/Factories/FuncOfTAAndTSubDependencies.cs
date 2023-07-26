@@ -18,7 +18,7 @@ internal class Parent
 
 // Don't register the type of int
 [ImplementationAggregation(typeof(Parent), typeof(ConcreteClass))]
-// Make int a parameter of the Func-Factory
+// Make int a parameter of the Func-factory
 [CreateFunction(typeof(Func<int, Parent>), "Create")]
 internal partial class Container
 {
@@ -31,8 +31,12 @@ internal static class Usage
     {
         using var container = Container.DIE_CreateContainer();
         var concreteClassFactory = container.Create();
-        var concreteClassA = concreteClassFactory(6);
-        var concreteClassB = concreteClassFactory(9);
-        // Do something with implementation
+        // The caller side parameter can also be used for sub-dependencies
+        // In this case the Parent class doesn't require an int value, but its sub-dependency ConcreteClass does
+        var parentA = concreteClassFactory(6);
+        var parentB = concreteClassFactory(9);
+        Console.WriteLine(parentA.GetType().Name); // Parent
+        Console.WriteLine(parentB.GetType().Name); // Parent
+        Console.WriteLine(parentA == parentB); // False
     }
 }
