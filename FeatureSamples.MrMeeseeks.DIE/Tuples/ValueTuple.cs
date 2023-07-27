@@ -12,7 +12,8 @@ internal interface IInterface {}
 internal class Implementation : IInterface {}
 
 [ImplementationAggregation(typeof(ConcreteClass), typeof(Implementation))]
-[CreateFunction(typeof(ValueTuple<ConcreteClass, Implementation, int>), "Create")]
+// Return a ValueTuple<ConcreteClass, IInterface, int> without explicitly registering it
+[CreateFunction(typeof(ValueTuple<ConcreteClass, IInterface, int>), "Create")]
 internal partial class Container
 {
     private Container() {}
@@ -25,7 +26,10 @@ internal static class Usage
     internal static void Use()
     {
         using var container = Container.DIE_CreateContainer();
-        var valueTuple = container.Create();
-        // Do something with items
+        var (concreteClass, implementation, number) = container.Create();
+        Console.WriteLine(concreteClass.GetType().Name); // ConcreteClass
+        Console.WriteLine(implementation.GetType().Name); // Implementation
+        Console.WriteLine(number.GetType().Name); // Int32
+        Console.WriteLine(number); // 42
     }
 }
