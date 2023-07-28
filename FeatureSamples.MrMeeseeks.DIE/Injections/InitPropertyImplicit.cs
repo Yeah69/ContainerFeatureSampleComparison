@@ -5,8 +5,8 @@ using MrMeeseeks.DIE.Configuration.Attributes;
 
 namespace ContainerFeatureSampleComparison.FeatureSamples.MrMeeseeks.DIE.Injections.InitPropertyImplicit;
 
+// Simple classes that we want to inject into another class
 internal class ConcreteClassA { }
-
 internal class ConcreteClassB { }
 
 internal class Parent
@@ -18,6 +18,9 @@ internal class Parent
 }
 
 [ImplementationAggregation(typeof(Parent), typeof(ConcreteClassA), typeof(ConcreteClassB))]
+// No need for explicit registration of properties (like in the "ExplicitPropertyChoice"-sample) to be injected, because they are all init-properties.
+// The rationale for this convention is: if the container is instantiating the Parent-object, then the user has no chance to set the init-properties themselves.
+// That means it would be strange not have the container inject them.
 [CreateFunction(typeof(Parent), "Create")]
 internal partial class Container
 {
@@ -30,6 +33,7 @@ internal static class Usage
     {
         using var container = Container.DIE_CreateContainer();
         var parent = container.Create();
-        // Do something with parent and/or its dependencies
+        Console.WriteLine(parent.Dependency!.GetType().Name); // ConcreteClassA
+        Console.WriteLine(parent.DependencyRequired.GetType().Name); // ConcreteClassB
     }
 }

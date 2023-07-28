@@ -5,12 +5,14 @@ using MrMeeseeks.DIE.Configuration.Attributes;
 
 namespace ContainerFeatureSampleComparison.FeatureSamples.MrMeeseeks.DIE.Injections.ConstructorParameter;
 
+// Simple class that we want to inject into another class
 internal class ConcreteClass
 {
 }
 
 internal class Parent
 {
+    // Inject it here as a constructor parameter
     internal Parent(ConcreteClass child) => Dependency = child;
     internal ConcreteClass Dependency { get; }
 }
@@ -28,6 +30,6 @@ internal static class Usage
     {
         using var container = Container.DIE_CreateContainer();
         var parent = container.Create();
-        // Do something with parent and/or its dependency
+        Console.WriteLine(parent.Dependency.GetType().Name); // ConcreteClass
     }
 }

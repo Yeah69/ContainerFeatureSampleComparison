@@ -5,11 +5,13 @@ using MrMeeseeks.DIE.Configuration.Attributes;
 
 namespace ContainerFeatureSampleComparison.FeatureSamples.MrMeeseeks.DIE.Injections.TypeInitializerParameter;
 
+// Simple class that we want to inject into another class
 internal class ConcreteClass {}
 
 internal class Parent
 {
     internal ConcreteClass? Dependency { get; private set; }
+    // The type initializer method can have dependencies which are resolved by the container as well
     internal void Initialize(ConcreteClass dependency) => Dependency = dependency;
 }
 
@@ -28,6 +30,6 @@ internal static class Usage
         using var container = Container.DIE_CreateContainer();
         var parent = container.Create();
         Console.WriteLine($"Is null: {parent.Dependency is null}"); // Is null: False
-        // Do something with parent and/or its dependency
+        Console.WriteLine(parent.Dependency!.GetType().Name); // ConcreteClass
     }
 }
