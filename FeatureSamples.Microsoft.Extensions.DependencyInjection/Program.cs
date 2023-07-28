@@ -4,6 +4,6 @@ public static class Program
 {
     public static void Main()
     {
-        TypeInitializers.Sync.Usage.Use();
+        Injections.TypeInitializerParameter.Usage.Use();
     }
 }
