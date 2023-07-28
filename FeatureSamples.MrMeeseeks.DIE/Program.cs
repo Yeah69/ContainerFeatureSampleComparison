@@ -2,8 +2,8 @@
 
 public class Program
 {
-    public static void Main()
+    public static async Task Main()
     {
-        Generics.OpenFillIns.Usage.Use();
+        await TypeInitializers.AsyncTask.Usage.Use();
     }
 }
