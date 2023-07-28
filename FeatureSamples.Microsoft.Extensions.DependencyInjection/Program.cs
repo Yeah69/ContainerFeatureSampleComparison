@@ -4,6 +4,6 @@ public static class Program
 {
     public static void Main()
     {
-        Iterables.IEnumerableOfT.Usage.Use();
+        TypeInitializers.Sync.Usage.Use();
     }
 }
