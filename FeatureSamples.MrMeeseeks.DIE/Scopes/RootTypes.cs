@@ -70,14 +70,15 @@ internal static class Usage
     {
         var container = Container.DIE_CreateContainer();
         var parent = container.Create();
-        // Do something with the parent and/or its dependencies
         Console.WriteLine($"Disposed: {parent.ScopeRoot.Dependency.Disposed}"); // Disposed: False
         Console.WriteLine($"Disposed: {parent.TransientScopeRoot.Dependency.Disposed}"); // Disposed: False
         Console.WriteLine($"Disposed: {parent.DisposedByContainer.Dependency.Disposed}"); // Disposed: False
+        // Disposing a transient scope root will dispose the transient scope and all its managed disposable dependencies.
         parent.TransientScopeRoot.CleanUp();
         Console.WriteLine($"Disposed: {parent.ScopeRoot.Dependency.Disposed}"); // Disposed: False
         Console.WriteLine($"Disposed: {parent.TransientScopeRoot.Dependency.Disposed}"); // Disposed: True
         Console.WriteLine($"Disposed: {parent.DisposedByContainer.Dependency.Disposed}"); // Disposed: False
+        // Disposing the container will dispose every scope and all managed disposable dependencies that weren't disposed yet.
         container.Dispose();
         Console.WriteLine($"Disposed: {parent.ScopeRoot.Dependency.Disposed}"); // Disposed: True
         Console.WriteLine($"Disposed: {parent.TransientScopeRoot.Dependency.Disposed}"); // Disposed: True

@@ -7,25 +7,11 @@ namespace ContainerFeatureSampleComparison.FeatureSamples.MrMeeseeks.DIE.Scopes.
 
 internal interface IInterface {}
 
-internal class ConcreteClassContainer : IInterface
-{
-}
-
-internal class ConcreteClassScopeA : IInterface
-{
-}
-
-internal class ConcreteClassScopeB : IInterface
-{
-}
-
-internal class ConcreteClassTransientScopeA : IInterface
-{
-}
-
-internal class ConcreteClassTransientScopeB : IInterface
-{
-}
+internal class ConcreteClassContainer : IInterface { }
+internal class ConcreteClassScopeA : IInterface { }
+internal class ConcreteClassScopeB : IInterface { }
+internal class ConcreteClassTransientScopeA : IInterface { }
+internal class ConcreteClassTransientScopeB : IInterface { }
 
 
 internal class ScopeRootA
@@ -84,6 +70,7 @@ internal partial class Container
 {
     private Container() {}
     
+    // Each (transient) scope root can also get its own dedicated (transient) scope configuration.
     [CustomScopeForRootTypes(typeof(ScopeRootA))]
     [ImplementationChoice(typeof(IInterface), typeof(ConcreteClassScopeA))]
     private sealed partial class DIE_ScopeA {}
@@ -107,6 +94,7 @@ internal static class Usage
     {
         var container = Container.DIE_CreateContainer();
         var parent = container.Create();
+        // Each scope gets its configured implementation choice for IInterface injected.
         Console.WriteLine($"Container: {parent.Dependency.GetType().Name}"); // Container: ConcreteClassContainer
         Console.WriteLine($"ScopeA: {parent.ScopeRootA.Dependency.GetType().Name}"); // ScopeA: ConcreteClassScopeA
         Console.WriteLine($"ScopeB: {parent.ScopeRootB.Dependency.GetType().Name}"); // ScopeB: ConcreteClassScopeB

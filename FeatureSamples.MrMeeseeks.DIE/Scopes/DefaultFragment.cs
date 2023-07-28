@@ -7,33 +7,13 @@ namespace ContainerFeatureSampleComparison.FeatureSamples.MrMeeseeks.DIE.Scopes.
 
 internal interface IInterface {}
 
-internal class ConcreteClassContainer : IInterface
-{
-}
-
-internal class ConcreteClassScopeDefault : IInterface
-{
-}
-
-internal class ConcreteClassScopeA : IInterface
-{
-}
-
-internal class ConcreteClassScopeB : IInterface
-{
-}
-
-internal class ConcreteClassTransientScopeDefault : IInterface
-{
-}
-
-internal class ConcreteClassTransientScopeA : IInterface
-{
-}
-
-internal class ConcreteClassTransientScopeB : IInterface
-{
-}
+internal class ConcreteClassContainer : IInterface { }
+internal class ConcreteClassScopeDefault : IInterface { }
+internal class ConcreteClassScopeA : IInterface { }
+internal class ConcreteClassScopeB : IInterface { }
+internal class ConcreteClassTransientScopeDefault : IInterface { }
+internal class ConcreteClassTransientScopeA : IInterface { }
+internal class ConcreteClassTransientScopeB : IInterface { }
 
 
 internal class ScopeRootDefault
@@ -111,7 +91,7 @@ internal partial class Container
 {
     private Container() {}
     
-    // The default scope doesn't need to assigned to a scope root type
+    // The default scope doesn't need to be assigned to a scope root type
     [ImplementationChoice(typeof(IInterface), typeof(ConcreteClassScopeDefault))]
     private sealed partial class DIE_DefaultScope {}
     
@@ -123,7 +103,7 @@ internal partial class Container
     [ImplementationChoice(typeof(IInterface), typeof(ConcreteClassScopeB))]
     private sealed partial class DIE_ScopeB {}
     
-    // The default transient scope doesn't need to assigned to a transient scope root type
+    // The default transient scope doesn't need to be assigned to a transient scope root type
     [ImplementationChoice(typeof(IInterface), typeof(ConcreteClassTransientScopeDefault))]
     private sealed partial class DIE_DefaultTransientScope {}
     
@@ -142,6 +122,7 @@ internal static class Usage
     {
         var container = Container.DIE_CreateContainer();
         var parent = container.Create();
+        // Each scope gets its configured implementation choice for IInterface injected.
         Console.WriteLine($"Container: {parent.Dependency.GetType().Name}"); // Container: ConcreteClassContainer
         Console.WriteLine($"DefaultScope: {parent.ScopeRootDefault.Dependency.GetType().Name}"); // DefaultScope: ConcreteClassScopeDefault
         Console.WriteLine($"ScopeA: {parent.ScopeRootA.Dependency.GetType().Name}"); // ScopeA: ConcreteClassScopeA

@@ -20,7 +20,6 @@
 [assembly:MissingFeature(Feature.InjectionsExplicitPropertyChoice, MissingFeatureReason.NotSupported, "Microsoft.Extensions.DependencyInjection does not support property injection: https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection-guidelines#default-service-container-replacement")]
 [assembly:MissingFeature(Feature.InjectionsInitPropertyImplicit, MissingFeatureReason.NotSupported, "Microsoft.Extensions.DependencyInjection does not support property injection: https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection-guidelines#default-service-container-replacement")]
 
-
 [assembly:MissingFeature(Feature.AsyncNotWrapped, MissingFeatureReason.NotSupported, "Microsoft.Extensions.DependencyInjection does not support async initialization (see async samples in \"Type Initializers\" group).")]
 [assembly:MissingFeature(Feature.AsyncWrappedTask, MissingFeatureReason.NotSupported, "Microsoft.Extensions.DependencyInjection does not support async initialization (see async samples in \"Type Initializers\" group).")]
 [assembly:MissingFeature(Feature.AsyncWrappedValueTask, MissingFeatureReason.NotSupported, "Microsoft.Extensions.DependencyInjection does not support async initialization (see async samples in \"Type Initializers\" group).")]
