@@ -5,9 +5,8 @@ using MrMeeseeks.DIE.Configuration.Attributes;
 
 namespace ContainerFeatureSampleComparison.FeatureSamples.MrMeeseeks.DIE.ScopedInstances.Container;
 
-internal class ConcreteClassPerContainer
-{
-}
+// Simple class that will be created once per container
+internal class ConcreteClassPerContainer { }
 
 internal class ScopeRoot
 {
@@ -17,6 +16,7 @@ internal class ScopeRoot
     internal ConcreteClassPerContainer ConcreteClassPerContainer { get; }
 }
 
+// We'll build a similar scope structure as in the "Scope" sample
 internal class TransientScopeRoot
 {
     internal TransientScopeRoot(
@@ -52,6 +52,8 @@ internal class Parent
 [ImplementationAggregation(typeof(Parent), typeof(ScopeRoot), typeof(TransientScopeRoot), typeof(ConcreteClassPerContainer))]
 [ScopeRootImplementationAggregation(typeof(ScopeRoot))]
 [TransientScopeRootImplementationAggregation(typeof(TransientScopeRoot))]
+// Register ConcreteClassPerContainer as a container instance (otherwise known as "single instance" or "singleton").
+// That means, that it will be created once per container and will be shared for each injection of that type.
 [ContainerInstanceImplementationAggregation(typeof(ConcreteClassPerContainer))]
 [CreateFunction(typeof(Parent), "Create")]
 internal partial class Container
@@ -66,6 +68,7 @@ internal static class Usage
         var container = Container.DIE_CreateContainer();
         var parent = container.Create();
         
+        // All dependencies are equal to each other
         Console.WriteLine(parent.ConcreteClassPerContainer == parent.ScopeRoot.ConcreteClassPerContainer); // True
         Console.WriteLine(parent.ConcreteClassPerContainer == parent.TransientScopeRoot.ConcreteClassPerContainer); // True
         Console.WriteLine(parent.ConcreteClassPerContainer == parent.TransientScopeRoot.ScopeRoot.ConcreteClassPerContainer); // True
