@@ -23,12 +23,13 @@ internal interface IDecorator<T> {}
 // This is the decorator. It must implement the decorated interface and the decorator interface.
 internal class Decorator : IInterface, IDecorator<IInterface>
 {
-    // Also it can a dependency of the decorated interface. The decorated implementation instance or another decorator will be injected here.
+    // Also it can have a dependency of the decorated interface. The decorated implementation instance or another decorator will be injected here.
     internal Decorator(IInterface decorated) => Decorated = decorated;
     public IInterface Decorated { get; }
 }
 
 [ImplementationAggregation(typeof(DecoratedImplementation), typeof(Decorator))]
+// We need to specify the decorator interface.
 [DecoratorAbstractionAggregation(typeof(IDecorator<>))]
 [CreateFunction(typeof(IInterface), "Create")]
 internal partial class Container

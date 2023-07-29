@@ -5,11 +5,13 @@ using MrMeeseeks.DIE.Configuration.Attributes;
 
 namespace ContainerFeatureSampleComparison.FeatureSamples.MrMeeseeks.DIE.CompositePattern.Decorated;
 
+// This is the interface of which the implementations will be composited and decorated.
 internal interface IInterface
 {
     IEnumerable<IInterface> Composition { get; }
 }
 
+// Multiple implementations of the interface.
 internal class ComposedImplementationA : IInterface
 {
     public IEnumerable<IInterface> Composition => new[] { this };
@@ -25,8 +27,10 @@ internal class ComposedImplementationC : IInterface
     public IEnumerable<IInterface> Composition => new[] { this };
 }
 
+// This interface marks a decorator. Its generic parameter should be the decorated interface.
 internal interface IDecorator<T> {}
 
+// Multiple decorators of the interface.
 internal class DecoratorA : IInterface, IDecorator<IInterface>
 {
     internal DecoratorA(IInterface decorated) => Composition = new []{ decorated };
@@ -45,8 +49,10 @@ internal class DecoratorC : IInterface, IDecorator<IInterface>
     public IEnumerable<IInterface> Composition { get; }
 }
 
+// This interface marks a composite. Its generic parameter should be the composited interface.
 internal interface IComposite<T> {}
 
+// This is the composite. It must implement the composited interface and the composite interface.
 internal class Composite : IInterface, IComposite<IInterface>
 {
     internal Composite(IEnumerable<IInterface> composition) => Composition = composition;
@@ -55,10 +61,13 @@ internal class Composite : IInterface, IComposite<IInterface>
 
 [ImplementationAggregation(typeof(Composite), typeof(ComposedImplementationA), typeof(ComposedImplementationB), typeof(ComposedImplementationC), typeof(DecoratorA), typeof(DecoratorB), typeof(DecoratorC))]
 [DecoratorAbstractionAggregation(typeof(IDecorator<>))]
+// We need to specify the composite interface.
 [CompositeAbstractionAggregation(typeof(IComposite<>))]
+// Specify the decorator sequences for the composited implementations.
 [DecoratorSequenceChoice(typeof(IInterface), typeof(ComposedImplementationA), typeof(DecoratorA), typeof(DecoratorB), typeof(DecoratorC))]
 [DecoratorSequenceChoice(typeof(IInterface), typeof(ComposedImplementationB), typeof(DecoratorC), typeof(DecoratorB), typeof(DecoratorA))]
 [DecoratorSequenceChoice(typeof(IInterface), typeof(ComposedImplementationC))]
+// The composite can be decorated, too.
 [DecoratorSequenceChoice(typeof(IInterface), typeof(Composite), typeof(DecoratorB))]
 [CreateFunction(typeof(IInterface), "Create")]
 internal partial class Container
@@ -72,6 +81,7 @@ internal static class Usage
     {
         using var container = Container.DIE_CreateContainer();
         var root = container.Create();
+        // Check the composition and the decorations
         Console.WriteLine(nameof(Composite));
         Console.WriteLine(root is DecoratorB); // True
         Console.WriteLine(root.Composition.First() is Composite); // True

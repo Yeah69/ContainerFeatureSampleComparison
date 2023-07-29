@@ -50,6 +50,7 @@ internal class DecoratorC : IInterface, IDecorator<IInterface>
 }
 
 [ImplementationAggregation(typeof(DecoratedImplementationA), typeof(DecoratedImplementationB), typeof(DecoratedImplementationC), typeof(DecoratorA), typeof(DecoratorB), typeof(DecoratorC))]
+// We need to specify the decorator interface.
 [DecoratorAbstractionAggregation(typeof(IDecorator<>))]
 // For each decorated implementation we define a decorator sequence.
 [DecoratorSequenceChoice(typeof(IInterface), typeof(DecoratedImplementationA), typeof(DecoratorA), typeof(DecoratorB), typeof(DecoratorC))]

@@ -41,6 +41,7 @@ internal class DecoratorC : IInterface, IDecorator<IInterface>
 }
 
 [ImplementationAggregation(typeof(DecoratedImplementation), typeof(DecoratorA), typeof(DecoratorB), typeof(DecoratorC))]
+// We need to specify the decorator interface.
 [DecoratorAbstractionAggregation(typeof(IDecorator<>))]
 // We define an explicit order for the decorators with the following attribute.
 // First parameter should be the decorated interface. The second parameter should be the type for which we want to set a decoration order.
