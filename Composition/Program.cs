@@ -10,10 +10,10 @@ var compositionData = CompositionData.Create();
 var html = new StringBuilder();
 html.AppendLine("""
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title>Dependency Injection Container Feature Comparison</title>
-        <meta charset="utf-8" />
+        <meta charset="utf-8">
         <style>
             /* Material Design Styles */
 
@@ -55,6 +55,12 @@ html.AppendLine("""
 
             th {
               text-align: left;
+              padding: 8px;
+              color: #333;
+            }
+
+            td.header {
+              font-weight: bold;   
               padding: 8px;
               color: #333;
             }
@@ -116,22 +122,26 @@ html.AppendLine("""
                 <h1>Dependency Injection Container Feature Comparison</h1>
 """);
 
-html.AppendLine("""
+html.AppendLine($$"""
 <section>
-    <h2>General Information</h2>
     <table>
         <tbody>
+            <tr>
+                <td colspan="{{compositionData.DiContainerNames.Count + 1}}">
+                    <h2>General Information</h2>
+                </td>
+            </tr>
 """);
     
 html.AppendLine("""
             <tr>
-                <th/>
+                <td></td>
 """);
 
 foreach (var diContainerName in compositionData.DiContainerNames)
 {
     html.AppendLine($$"""
-<th>{{diContainerName.EscapeHtmlCharacters()}}</th>
+                <td class="header">{{diContainerName.EscapeHtmlCharacters()}}</td>
 """);
 }
 
@@ -207,31 +217,26 @@ html.AppendLine("""
             </tr>
 """);
 
-html.AppendLine("""
-        </tbody>
-    </table>
-</section>
-""");
-
 foreach (var featureGroupDescription in compositionData.FeatureGroupDescriptions.OrderBy(g => g.Features.MinBy(f => f.Feature)?.Feature ?? (Feature) int.MaxValue))
 {
     html.AppendLine($$"""
-<section>
-    <h2>{{featureGroupDescription.Title.Humanize(LetterCasing.Title).EscapeHtmlCharacters()}}</h2>
-    <div>{{(!string.IsNullOrEmpty(featureGroupDescription.Description) ? $"<p>{featureGroupDescription.Description.EscapeHtmlCharacters()}</p>" : string.Empty)}}</div>
-    <table>
-        <tbody>
+            <tr>
+                <td colspan="{{compositionData.DiContainerNames.Count + 1}}">
+                    <h2>{{featureGroupDescription.Title.Humanize(LetterCasing.Title).EscapeHtmlCharacters()}}</h2>
+                    <div>{{(!string.IsNullOrEmpty(featureGroupDescription.Description) ? $"<p>{featureGroupDescription.Description.EscapeHtmlCharacters()}</p>" : string.Empty)}}</div>
+                </td>
+            </tr>
 """);
     
     html.AppendLine("""
 <tr>
-    <th>Feature</th>
+    <td class="header">Feature</td>
 """);
 
     foreach (var diContainerName in compositionData.DiContainerNames)
     {
         html.AppendLine($$"""
-<th>{{diContainerName.EscapeHtmlCharacters()}}</th>
+<td class="header">{{diContainerName.EscapeHtmlCharacters()}}</td>
 """);
     }
 
@@ -339,13 +344,13 @@ foreach (var featureGroupDescription in compositionData.FeatureGroupDescriptions
             }
         }
     }
+}
     
-    html.AppendLine("""
+html.AppendLine("""
         </tbody>
     </table>
 </section>
 """);
-}
 
 html.AppendLine("""
             </div>
