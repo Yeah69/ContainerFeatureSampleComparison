@@ -4,6 +4,6 @@ public static class Program
 {
     public static void Main()
     {
-        Scopes.Simple.Usage.Use();
+        ScopedInstances.Container.Usage.Use();
     }
 }
