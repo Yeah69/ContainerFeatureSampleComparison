@@ -5,15 +5,8 @@ using MrMeeseeks.DIE.Configuration.Attributes;
 
 namespace ContainerFeatureSampleComparison.FeatureSamples.MrMeeseeks.DIE.Misc.InitializedInstance;
 
-internal class ConcreteClass
-{
-}
-
-internal class Parent
-{
-    internal Parent(ConcreteClass dependency) => Dependency = dependency;
-    public ConcreteClass Dependency { get; set; }
-}
+// This simple class will be used as an initialized instance in the container and the scope
+internal class ConcreteClass { }
 
 internal class ScopeRoot
 {
@@ -21,7 +14,9 @@ internal class ScopeRoot
     internal ConcreteClass Dependency { get; }
 }
 
-[ImplementationAggregation(typeof(ConcreteClass), typeof(Parent), typeof(ScopeRoot))]
+[ImplementationAggregation(typeof(ConcreteClass), typeof(ScopeRoot))]
+// Initialized instances can be defined for a container.
+// They will be created as soon as the container is created and then used for injections to their type.
 [InitializedInstances(typeof(ConcreteClass))]
 [ScopeRootImplementationAggregation(typeof(ScopeRoot))]
 [CreateFunction(typeof(ConcreteClass), "Create")]
@@ -30,6 +25,8 @@ internal partial class Container
 {
     private Container() {}
     
+    // Initialized instances can also be defined for a scope.
+    // They will be created as soon as the scope is created and then used for injections to their type.
     [InitializedInstances(typeof(ConcreteClass))]
     private partial class DIE_DefaultScope {}
 }
@@ -46,7 +43,7 @@ internal static class Usage
         
         var concreteClassSA = container.CreateScope().Dependency;
         var concreteClassSB = container.CreateScope().Dependency;
-        // Or initialized instances are implicitly and effectively much like scoped instances
+        // Or initialized instances are implicitly and effectively much like scoped instances, if used in a scope.
         Console.WriteLine(concreteClassSA != concreteClassSB); // True
     }
 }

@@ -5,6 +5,7 @@ using MrMeeseeks.DIE.Configuration.Attributes;
 
 namespace ContainerFeatureSampleComparison.FeatureSamples.MrMeeseeks.DIE.Misc.MarkerInterface;
 
+// Define a marker interface for each dependency injection setting
 public interface IContainerInstance { }
 public interface ITransientScopeInstance { }
 public interface IScopeInstance { }
@@ -30,8 +31,10 @@ public interface IValueTaskInitializer
     ValueTask InitializeAsync();
 }
 
+// A helpful interface (not marker interface)
 internal interface IInterface {}
 
+// Some implementations, composites and decorators which get marked with the marker interfaces.
 internal class ImplementationA : IContainerInstance, IInitializer, ITransient, IDisposable, IAsyncDisposable
 {
     public void Initialize() { }
@@ -81,6 +84,7 @@ internal class Root
 
 [ImplementationAggregation(typeof(ImplementationA), typeof(ImplementationB), typeof(ImplementationC), typeof(Decorator), typeof(Composite), typeof(TransientScopeRoot), typeof(ScopeRoot), typeof(Root))]
 
+// Register marker interfaces instead of implementations for the diverse dependency injection settings.
 [ContainerInstanceAbstractionAggregation(typeof(IContainerInstance))]
 [TransientScopeInstanceAbstractionAggregation(typeof(ITransientScopeInstance))]
 [ScopeInstanceAbstractionAggregation(typeof(IScopeInstance))]
@@ -107,6 +111,6 @@ internal static class Usage
     {
         using var container = Container.DIE_CreateContainer();
         var root = container.Create();
-        // Do something with root
+        // Checking would be overkill here.
     }
 }
