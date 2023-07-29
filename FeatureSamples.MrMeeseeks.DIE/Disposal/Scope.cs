@@ -5,6 +5,7 @@ using MrMeeseeks.DIE.Configuration.Attributes;
 
 namespace ContainerFeatureSampleComparison.FeatureSamples.MrMeeseeks.DIE.Disposal.Scope;
 
+// Some simple disposable classes for which the disposal will be either managed by the container/scope or not.
 internal class ConcreteClassSync : System.IDisposable
 {
     internal bool Disposed { get; private set; }
@@ -37,6 +38,7 @@ internal class ConcreteClassAsyncTransient : System.IAsyncDisposable
     }
 }
 
+// Inject them all into the transient scope root.
 internal class TransientScopeRoot
 {
     internal TransientScopeRoot(
@@ -61,6 +63,7 @@ internal class TransientScopeRoot
 }
 
 [ImplementationAggregation(typeof(TransientScopeRoot), typeof(ConcreteClassSync), typeof(ConcreteClassSyncTransient), typeof(ConcreteClassAsync), typeof(ConcreteClassAsyncTransient))]
+// Make half of the transient/unmanaged
 [TransientScopeRootImplementationAggregation(typeof(TransientScopeRoot))]
 [TransientImplementationAggregation(typeof(ConcreteClassSyncTransient), typeof(ConcreteClassAsyncTransient))]
 [CreateFunction(typeof(TransientScopeRoot), "Create")]
@@ -81,11 +84,22 @@ internal static class Usage
         Console.WriteLine($"Disposed: {transientScopeRoot.ConcreteClassAsync.Disposed}"); // Disposed: False
         Console.WriteLine($"Disposed: {transientScopeRoot.ConcreteClassAsyncTransient.Disposed}"); // Disposed: False
 
+        // Eagerly dispose the transient scope root
         await transientScopeRoot.TransientScopeDisposalHandle.DisposeAsync().ConfigureAwait(false);
         
+        // The managed instances are disposed
         Console.WriteLine($"Disposed: {transientScopeRoot.ConcreteClassSync.Disposed}"); // Disposed: True
         Console.WriteLine($"Disposed: {transientScopeRoot.ConcreteClassSyncTransient.Disposed}"); // Disposed: False
         Console.WriteLine($"Disposed: {transientScopeRoot.ConcreteClassAsync.Disposed}"); // Disposed: True
         Console.WriteLine($"Disposed: {transientScopeRoot.ConcreteClassAsyncTransient.Disposed}"); // Disposed: False
+        
+        // Just because it is good manners to dispose everything ;)
+        transientScopeRoot.ConcreteClassSyncTransient.Dispose();
+        await transientScopeRoot.ConcreteClassAsyncTransient.DisposeAsync();
+        
+        Console.WriteLine($"Disposed: {transientScopeRoot.ConcreteClassSync.Disposed}"); // Disposed: True
+        Console.WriteLine($"Disposed: {transientScopeRoot.ConcreteClassSyncTransient.Disposed}"); // Disposed: True
+        Console.WriteLine($"Disposed: {transientScopeRoot.ConcreteClassAsync.Disposed}"); // Disposed: True
+        Console.WriteLine($"Disposed: {transientScopeRoot.ConcreteClassAsyncTransient.Disposed}"); // Disposed: True
     }
 }

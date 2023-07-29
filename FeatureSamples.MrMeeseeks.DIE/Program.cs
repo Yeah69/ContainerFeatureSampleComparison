@@ -4,6 +4,6 @@ public class Program
 {
     public static async Task Main()
     {
-        await TypeInitializers.AsyncTask.Usage.Use();
+        await Disposal.Scope.Usage.Use();
     }
 }
