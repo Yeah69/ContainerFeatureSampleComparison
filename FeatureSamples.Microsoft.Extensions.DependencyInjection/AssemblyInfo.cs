@@ -25,3 +25,6 @@
 [assembly:MissingFeature(Feature.AsyncWrappedValueTask, MissingFeatureReason.NotSupported, "Microsoft.Extensions.DependencyInjection does not support async initialization (see async samples in \"Type Initializers\" group).")]
 [assembly:MissingFeature(Feature.AsyncNotWrappedIEnumerable, MissingFeatureReason.NotSupported, "Microsoft.Extensions.DependencyInjection does not support async initialization (see async samples in \"Type Initializers\" group).")]
 [assembly:MissingFeature(Feature.AsyncWrappedIAsyncEnumerable, MissingFeatureReason.NotSupported, "Microsoft.Extensions.DependencyInjection does not support async initialization (see async samples in \"Type Initializers\" group).")]
+
+[assembly:MissingFeature(Feature.CustomizationCustomConstructorParameterInjection, MissingFeatureReason.NotSupported, "Microsoft.Extensions.DependencyInjection does not support \"injection based on name\": https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection-guidelines#default-service-container-replacement")]
+[assembly:MissingFeature(Feature.CustomizationCustomPropertyInjection, MissingFeatureReason.NotSupported, "Microsoft.Extensions.DependencyInjection does not support property injection: https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection-guidelines#default-service-container-replacement")]

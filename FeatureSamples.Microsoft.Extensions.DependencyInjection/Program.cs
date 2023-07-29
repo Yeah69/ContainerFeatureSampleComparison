@@ -4,6 +4,6 @@ public static class Program
 {
     public static void Main()
     {
-        Disposal.IAsyncDisposable.Usage.Use();
+        Customization.CustomFactory.Usage.Use();
     }
 }
