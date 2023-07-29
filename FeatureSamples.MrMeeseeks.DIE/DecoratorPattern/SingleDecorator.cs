@@ -5,20 +5,25 @@ using MrMeeseeks.DIE.Configuration.Attributes;
 
 namespace ContainerFeatureSampleComparison.FeatureSamples.MrMeeseeks.DIE.DecoratorPattern.SingleDecorator;
 
+// This is the interface which will be decorated.
 internal interface IInterface
 {
     IInterface Decorated { get; }
 }
 
+// This is the implementation that will be decorated.
 internal class DecoratedImplementation : IInterface
 {
     public IInterface Decorated => this;
 }
 
+// This interface marks a decorator. Its generic parameter should be the decorated interface.
 internal interface IDecorator<T> {}
 
+// This is the decorator. It must implement the decorated interface and the decorator interface.
 internal class Decorator : IInterface, IDecorator<IInterface>
 {
+    // Also it can a dependency of the decorated interface. The decorated implementation instance or another decorator will be injected here.
     internal Decorator(IInterface decorated) => Decorated = decorated;
     public IInterface Decorated { get; }
 }
@@ -37,8 +42,9 @@ internal static class Usage
     {
         using var container = Container.DIE_CreateContainer();
         var instance = container.Create();
+        // The topmost instance is the decorator.
         Console.WriteLine(instance is Decorator); // True
+        // The decorated instance is nested.
         Console.WriteLine(instance.Decorated is DecoratedImplementation); // True
-        // Do something with implementation
     }
 }
