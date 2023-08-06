@@ -173,6 +173,11 @@ public enum Feature
         Title = "Factory: Lazy<T>",
         Description = "Resolution of a Lazy<T>. Such a factory (via the 'Value'-property of Lazy<T>) delays the resolution of a T-instance to whenever the owning component see fit. The conceptual difference to Func is that it can only resolve a single instance.")]
     FactoriesLazy,
+    [FeatureEnumInfo(
+        FeatureGroup = FeatureGroup.Factories, 
+        Title = "Factory: ThreadLocal<T>",
+        Description = "Resolution of a ThreadLocal<T>. Such a factory (via the 'Value'-property of ThreadLocal<T>) delays the resolution of a T-instance to whenever the owning component see fit. It also creates a separate instance per thread.")]
+    FactoriesThreadLocal,
 
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Tuples, 
@@ -321,6 +326,11 @@ public enum Feature
         Title = "Scope Disposal",
         Description = "Transient scopes can be disposed eagerly (before the parent container is disposed).")]
     DisposalScope,
+    [FeatureEnumInfo(
+        FeatureGroup = FeatureGroup.Disposal, 
+        Title = "Add For Disposal",
+        Description = "The container (or the scope) offers a way to add externally created instances to the disposal. That can become handy for disposable instances which are created via custom factories.")]
+    DisposalAddForDisposal,
     
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Customization, 
