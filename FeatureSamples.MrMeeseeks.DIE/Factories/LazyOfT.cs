@@ -3,7 +3,7 @@ using MrMeeseeks.DIE.Configuration.Attributes;
 
 [assembly:FeatureSample(Feature.FactoriesLazy)]
 
-namespace ContainerFeatureSampleComparison.FeatureSamples.MrMeeseeks.DIE.Implementations.LazyOfT;
+namespace ContainerFeatureSampleComparison.FeatureSamples.MrMeeseeks.DIE.Factories.LazyOfT;
 
 internal class ConcreteClass
 {

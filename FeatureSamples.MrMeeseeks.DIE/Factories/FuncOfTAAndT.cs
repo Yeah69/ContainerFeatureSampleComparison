@@ -3,7 +3,7 @@ using MrMeeseeks.DIE.Configuration.Attributes;
 
 [assembly:FeatureSample(Feature.FactoriesFuncWithParameter)]
 
-namespace ContainerFeatureSampleComparison.FeatureSamples.MrMeeseeks.DIE.Implementations.FuncOfTAAndT;
+namespace ContainerFeatureSampleComparison.FeatureSamples.MrMeeseeks.DIE.Factories.FuncOfTAAndT;
 
 internal class ConcreteClass
 {

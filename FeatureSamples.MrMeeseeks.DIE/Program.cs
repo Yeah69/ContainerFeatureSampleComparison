@@ -4,6 +4,6 @@ public class Program
 {
     public static async Task Main()
     {
-        await Customization.CustomFactory.Usage.Use();
+        await Disposal.AddForDisposal.Usage.Use();
     }
 }
