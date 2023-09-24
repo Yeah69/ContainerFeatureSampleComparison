@@ -13,7 +13,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="MrMeeseeks.DIE" Version="2.0.5" />
+      <PackageReference Include="MrMeeseeks.DIE" Version="2.1.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -27,5 +27,6 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </ProjectReference>
     </ItemGroup>
+
 
 </Project>

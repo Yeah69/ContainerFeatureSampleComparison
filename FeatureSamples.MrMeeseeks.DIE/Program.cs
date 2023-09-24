@@ -2,8 +2,8 @@
 
 public class Program
 {
-    public static async Task Main()
+    public static void Main()
     {
-        await Disposal.AddForDisposal.Usage.Use();
+        KeyedInjections.SupportedKeyTypes.Usage.Use();
     }
 }

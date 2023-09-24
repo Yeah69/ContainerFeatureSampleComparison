@@ -234,6 +234,37 @@ public enum Feature
     InjectionsTypeInitializerParameter,
     
     [FeatureEnumInfo(
+        FeatureGroup = FeatureGroup.KeyedInjections, 
+        Title = "One Key: Single Item ([Key] T)",
+        Description = "Injections of a single items for a single key.")]
+    KeyedInjectionsOneKeySingleItem,
+    [FeatureEnumInfo(
+        FeatureGroup = FeatureGroup.KeyedInjections, 
+        Title = "One Key: Multiple Items ([Key] IReadOnlyList<T>)",
+        Description = "Injections of a multiple items for a single key.")]
+    KeyedInjectionsOneKeyMultipleItems,
+    [FeatureEnumInfo(
+        FeatureGroup = FeatureGroup.KeyedInjections, 
+        Title = "All Keys: Single Item (IReadOnlyDictionary<Key, T>)",
+        Description = "Injections of a single items for all keys.")]
+    KeyedInjectionsAllKeysSingleItem,
+    [FeatureEnumInfo(
+        FeatureGroup = FeatureGroup.KeyedInjections, 
+        Title = "All Keys: Multiple Items (IReadOnlyDictionary<Key, IReadOnlyList<T>>)",
+        Description = "Injections of a multiple items for all keys.")]
+    KeyedInjectionsAllKeysMultipleItems,
+    [FeatureEnumInfo(
+        FeatureGroup = FeatureGroup.KeyedInjections, 
+        Title = "Supported Key Types",
+        Description = "Showcase of supported key types.")]
+    KeyedInjectionsSupportedKeyTypes,
+    [FeatureEnumInfo(
+        FeatureGroup = FeatureGroup.KeyedInjections, 
+        Title = "Supported Map Types",
+        Description = "Showcase of supported map types (dictionaries or iterables of KeyValuePair<Key, T>).")]
+    KeyedInjectionsSupportedMapTypes,
+    
+    [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Async, 
         Title = "Injecting Async Dependency (Not Wrapped)",
         Description = "Injection of an async dependency (e.g. one which has an async type initializer), where the dependency isn't wrapped into a Task<T>, a ValueTask<T> or an IAsyncEnumerable<T>.")]
@@ -453,6 +484,8 @@ public enum FeatureGroup
     TypeInitializers,
     [EnumMember(Value = "Group of features concerned with injections.")]
     Injections,
+    [EnumMember(Value = "Group of features concerned with keyed injections.")]
+    KeyedInjections,
     
     [EnumMember(Value = "Group of features concerned with support for asynchronous programming.")]
     Async,
