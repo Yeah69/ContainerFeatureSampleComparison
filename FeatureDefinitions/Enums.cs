@@ -263,6 +263,11 @@ public enum Feature
         Title = "Supported Map Types",
         Description = "Showcase of supported map types (dictionaries or iterables of KeyValuePair<Key, T>).")]
     KeyedInjectionsSupportedMapTypes,
+    [FeatureEnumInfo(
+        FeatureGroup = FeatureGroup.KeyedInjections, 
+        Title = "Key Value Injection",
+        Description = "Keyed implementation types can get their key value injected.")]
+    KeyedInjectionsKeyValueInjection,
     
     [FeatureEnumInfo(
         FeatureGroup = FeatureGroup.Async, 
