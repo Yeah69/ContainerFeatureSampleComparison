@@ -4,6 +4,6 @@ public static class Program
 {
     public static void Main()
     {
-        Customization.CustomFactory.Usage.Use();
+        KeyedInjections.OneKeyMultipleItems.Usage.Use();
     }
 }
