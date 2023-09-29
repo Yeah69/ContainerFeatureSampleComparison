@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{B347E5E5-A
 		Directory.build.props = Directory.build.props
 		.gitignore = .gitignore
 		.gitattributes = .gitattributes
+		.github\workflows\static.yml = .github\workflows\static.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeatureSamples.Generator", "FeatureSamples.Generator\FeatureSamples.Generator.csproj", "{188DC681-D336-4A9F-80EE-4FF3CDBBE206}"
