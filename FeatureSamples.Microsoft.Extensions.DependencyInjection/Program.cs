@@ -4,6 +4,6 @@ public static class Program
 {
     public static void Main()
     {
-        KeyedInjections.KeyValueInjection.Usage.Use();
+        Misc.RegisterAllImplementations.Usage.Use();
     }
 }
